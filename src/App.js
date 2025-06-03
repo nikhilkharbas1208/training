@@ -1,23 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
-
+// import { State } from './Components/State';
+// import { DerivedState } from './Components/DerivedState';
+//import { MessageProps } from './Components/MessageProps';
+import { BioProvider } from './hooks/ContextAPI';
+import { Home } from './hooks/ContextAPI/Home';
+import { About } from './hooks/ContextAPI/About';
+//import { ParentComponent } from './Components/PropDrilling';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <State/> */}
+      {/* <DerivedState/> */}
+      {/* <MessageProps/> */}
+      {/* <ParentComponent/> */}
+      <BioProvider>
+        <Home/>
+        <About/>
+      </BioProvider>
     </div>
   );
 }
