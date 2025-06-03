@@ -4,7 +4,10 @@ import { Button, Typography } from "@mui/material";
 import getTableReducer, { initialState } from "../reducers/TableReducer";
 
 const Table2Component = (props) => {
-  const [tableState, tableDispatch] = useReducer(getTableReducer, initialState);
+  const [tableState, tableDispatch] = useReducer(getTableReducer, {
+    ...initialState,
+    count: initialState.rows.length,
+  });
   console.log("tableState::", tableState);
 
   const handleOnClick = () => {

@@ -4,7 +4,7 @@ import Table2Component from "./components/Table2Component";
 import { useState } from "react";
 
 function App() {
-  const [showClassComponent, setShowClassComponent] = useState(true);
+  const [showClassComponent, setShowClassComponent] = useState(false);
   return (
     <div className="App">
       {showClassComponent ? <TableComponent /> : <Table2Component />}
