@@ -1,5 +1,5 @@
 // App.js or Table.jsx
-import React from 'react';
+import React, { useCallback } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -13,6 +13,14 @@ import { TextEditorModule, TextFilterModule,
 
 ModuleRegistry.registerModules([PaginationModule  ,ClientSideRowModelModule, TextEditorModule ,TextFilterModule, NumberFilterModule,NumberEditorModule, RowSelectionModule]);
 
+const SimpleComp =p => {
+  const viewHandler = useCallback(()=> window.alert('Name:'+p.value))
+  return(
+  <>
+    <button onClick={viewHandler}>view</button>
+    {p.value}
+  </>);
+}
 const MyCellComponent = p => {
     return(
         <>
@@ -47,7 +55,7 @@ export const Table = () => {
   ];
 
   const columnDefs = [
-    { headerName: "Name", field: "name", checkboxSelection: true, headerCheckboxSelection: true, },    //flex: 2
+    { headerName: "Name", field: "name", checkboxSelection: true, headerCheckboxSelection: true, cellRenderer: SimpleComp},    //flex: 2
     { headerName: "Age", field: "age" },
     { headerName: "Country", field: "country" },
     { headerName: "Edit", field: "edit", cellRenderer: MyCellComponent}
