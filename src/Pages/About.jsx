@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import NavBar from './NavBar'
+import StateObject from '../Hooks/StateObject'
 
 const About = () => {
   return (
@@ -15,6 +16,7 @@ const About = () => {
              <Link to="Contact">  <span> Contact___________ </span></Link>
 
         </div>
+        <StateObject/>
       <Outlet/>
     </div>
   )
