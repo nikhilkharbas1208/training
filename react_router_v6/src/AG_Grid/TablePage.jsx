@@ -23,6 +23,7 @@ const myTheme = themeQuartz
         foregroundColor: "#FFF",
         headerFontSize: 14
     });
+    
 
 function TablePage() {
   const [rowData, setRowData] = useState([]);

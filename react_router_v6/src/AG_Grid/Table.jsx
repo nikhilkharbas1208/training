@@ -20,6 +20,7 @@ const SimpleComp =p => {
     {p.value}
   </>);
 }
+
 const MyCellComponent = p => {
     return(
         <>
