@@ -8,7 +8,7 @@ export const MovieDetails = () => {
     const {Actor, Poster, Title, Plot, Type, Year, imdbID} = movieData;
     return(
         <>
-        <h1>MovieDetails</h1>
+        <h1>Movie Details</h1>
         <h2>Title:{Title}</h2>
         <img src={Poster} alt={Title}/>
         <p>{Plot}</p>

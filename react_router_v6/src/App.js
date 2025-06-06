@@ -8,7 +8,9 @@ import { Home } from './Pages/Home';
 import { ErrorPage } from './Pages/ErrorPage';
 import { GetMoviesData } from './API/GetAPIData';
 import { MovieDetails } from './Components/UI/MovieDetails';
+import { UserDetailPage } from './Components/UI/UserDetailPage';
 import { GetMoviesDetails } from './API/GetMovieDetails';
+import { GetUserDetails } from './API/GetUserDetails';
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -38,6 +40,11 @@ const App = () => {
     {
       path : "/contact",
       element : <Contact/>
+    },
+    {
+      path : "/user/:userID",
+      element : <UserDetailPage/>,
+      loader : GetUserDetails
     },
     ]
     }

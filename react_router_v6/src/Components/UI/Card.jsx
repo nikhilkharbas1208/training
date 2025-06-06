@@ -6,9 +6,10 @@ export const Card = ({curMovie}) => {
         <>
         <li>
         <NavLink to={`/movie/${imdbID}`}>
-        <img src={Poster} alt=''/>
+        <img src={Poster} alt=''/><br />
         <button>Watch Now</button>
         </NavLink>
+        <hr />
         </li>
         </>
     );
