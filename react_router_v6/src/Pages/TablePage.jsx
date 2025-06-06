@@ -27,7 +27,6 @@ const myTheme = themeQuartz
 
 function TablePage() {
   const [rowData, setRowData] = useState([]);
-  const navigate = useNavigate();
 
   const columnDefs = [
     {

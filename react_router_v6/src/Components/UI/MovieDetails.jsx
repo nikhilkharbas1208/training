@@ -1,7 +1,11 @@
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 
 export const MovieDetails = () => {
     const params = useParams();
+    const navigate = useNavigate();
+    const handleGoBack = () => {
+        navigate(-1);
+    }
     console.log(params);
     const movieData =useLoaderData();
     console.log(movieData);
@@ -12,6 +16,9 @@ export const MovieDetails = () => {
         <h2>Title:{Title}</h2>
         <img src={Poster} alt={Title}/>
         <p>{Plot}</p>
+        <button onClick={ handleGoBack }>
+            Go Back
+        </button>
         </>
     );
 };
