@@ -1,4 +1,4 @@
-import TablePage from '../AG_Grid/TablePage';
+import TablePage from './TablePage';
 
 
 export const Home = () => {
