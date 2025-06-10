@@ -4,7 +4,7 @@ import Pprops from './funComponents/Pprops';
 import {Pprop} from './funComponents/Pprops.js';
 import Counter from './funComponents/Counter.js';
 import { PropsDrill } from './funComponents/PropDrill.js';
-import { Provider } from './ContextAPI/Contexts.js';
+//import { Provider } from './ContextAPI/Contexts.js';
 import {LevelA} from './ContextAPI/DataConsumer.js'
 import {FetchApi} from './funComponents/FetchApi.js'
 import About  from './Pages/About.jsx';
@@ -17,46 +17,77 @@ import NavBar from './Pages/NavBar.jsx';
 import ClickMe from './Pages/ClickMe.jsx';
 import Settings from './Pages/Settings.jsx';
 import DemoTable from './AgGrid/DemoTable.jsx';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { DecAction, IncAction }  from './Redux/Actions';
+import { connect, Provider, useDispatch, useSelector } from 'react-redux';
+import { DecAction, IncAction }  from './Redux_Counter/Actions.js';
 import { useReducer, useState } from 'react';
-import Reducer,{count} from './Redux/Reducer.js';
+import Reducer,{count} from './Redux_Counter/Reducer.js';
+import React from 'react'
+import PizzaBox from './Redux_Application/components/PizzaBox.js';
+import store from './Redux_Application/components/redux/Store.js';
+import BurgerBox from './Redux_Application/components/BurgerBox.js';
+import ProductsData from './Redux_Application/components/ProductsData.js';
 
-//     ---------useReduser----------
 
-// const count =10;
+//      ---------  Redux_Application  -------------
 
-//  const  Reducer =(state = count, action) => {
-    // const{type,payload} = action;
 
-//     switch(action.type){
-//         case "INCREMENT":
-//             return  state+1;
-//         case "DECREMENT":
-//             return  state-1;
-//         default:
-//             return state;
-//     }
 
-// }
-const App = ()=>{
-  const [state, Reducer] = useState(0);
-  const dispatch = useDispatch();
-  return(
-    <div>
-     <h1>  It's Redux </h1>
-    <center> 
-      <p>{state}</p>
-     <br/>
-     <button onClick={()=>Reducer(count,dispatch(IncAction()))}>[ + ]</button>
-     <button onClick={()=>Reducer(count,dispatch(DecAction()))}>[ - ]</button>
-     </center>
-    </div>
+const App = () => {
+  return (
+     <div>
+       <PizzaBox/>
+       <BurgerBox/>
+       <ProductsData/>
+     </div>
   )
-
 }
 
 export default App
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//     ---------useReduser----------
+
+// const App = ()=>{
+//   const [state, dispatch] = useReducer(Reducer,count);
+//   //const dispatch = useDispatch();
+//   return(
+//     <div>
+//      <h1>  It's Redux </h1>
+//     <center> 
+//       <p>{state}</p>
+//      <br/>
+//      <button onClick={()=>dispatch(IncAction())}>[ + ]</button>
+//      <button onClick={()=>dispatch(DecAction())}>[ - ]</button>
+//      </center>
+//     </div>
+//   )
+
+// }
+
+// export default App
 
 
 //               ----------useSelector    useDispatch--------
@@ -86,6 +117,7 @@ export default App
 
 
 
+//               ----------  Ag-Grid  ----------
 
 //  <DemoTable/>
 /* <center>
@@ -103,6 +135,8 @@ export default App
 
 
 
+//            ----------    routes using BrowserRouter  --------
+
 //  <BrowserRouter>
 //             <NavBar/>
 //             <Routes>
@@ -113,6 +147,10 @@ export default App
 //             </Routes>
 //         </BrowserRouter>
 
+
+
+
+//            ----------    routes using createRoutesFromElements  --------
 
 //  const router = createBrowserRouter(
 //     createRoutesFromElements(
@@ -131,7 +169,6 @@ export default App
 
 //     )
 //   )
-
 //   return(
 //     <div>
    
