@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css"; 
@@ -6,12 +6,14 @@ import { useSelector } from "react-redux";
 import { ModuleRegistry } from 'ag-grid-community';
 import {ClientSideRowModelModule,PaginationModule, RowSelectionModule, TextFilterModule, NumberFilterModule, TextEditorModule, NumberEditorModule,} from 'ag-grid-community';
 import { NavLink } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
 
 ModuleRegistry.registerModules([ ClientSideRowModelModule, PaginationModule, RowSelectionModule, TextFilterModule, NumberFilterModule,TextEditorModule, NumberEditorModule,]);
 
 export const TableComponent = () => {
-  const rowData = useSelector((state) => state.table.rows);
-
+  const { apiUsers, fetchAndSetUsers } = useContext(UserContext);
+  const reduxRows = useSelector((state) => state.table.rows);
+  const rowData = apiUsers ? apiUsers : reduxRows;
   const columnDefs = [
     {
       headerName: "Name",
@@ -31,7 +33,11 @@ export const TableComponent = () => {
   return (
     <>
       <h1>User List</h1>
-      <div className="ag-theme-quartz" style={{ height: 500 }}>
+       <button onClick={fetchAndSetUsers}>
+        <h3>Fetch API Data</h3>
+      </button>
+      
+      <div className="ag-theme-quartz" style={{ height: 400}}>
         <AgGridReact
           rowData={rowData}
           columnDefs={columnDefs}
