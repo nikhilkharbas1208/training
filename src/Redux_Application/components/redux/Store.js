@@ -14,6 +14,8 @@ import { composeWithDevTools } from '@redux-devtools/extension';
     product : ProductsReducer
  })
  const store = createStore(reducer,
-    composeWithDevTools( applyMiddleware(logger,...middleware)))  
+    composeWithDevTools( applyMiddleware(...middleware)))  
 
  export default store
+
+ 

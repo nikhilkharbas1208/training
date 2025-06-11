@@ -16,7 +16,7 @@ import RootLayout from './Layouts/RootLayout.jsx';
 import NavBar from './Pages/NavBar.jsx';
 import ClickMe from './Pages/ClickMe.jsx';
 import Settings from './Pages/Settings.jsx';
-import DemoTable from './AgGrid/DemoTable.jsx';
+// import DemoTable from './AgGrid/DemoTable.jsx';
 import { connect, Provider, useDispatch, useSelector } from 'react-redux';
 import { DecAction, IncAction }  from './Redux_Counter/Actions.js';
 import { useReducer, useState } from 'react';
@@ -25,20 +25,30 @@ import React from 'react'
 import PizzaBox from './Redux_Application/components/PizzaBox.js';
 import store from './Redux_Application/components/redux/Store.js';
 import BurgerBox from './Redux_Application/components/BurgerBox.js';
+import DemoTable from './Redux_Application/AgGrid/DemoTable.jsx';
 import ProductsData from './Redux_Application/components/ProductsData.js';
+import UserDetails from './Redux_Application/AgGrid/UserDetails.jsx';
 
 
 //      ---------  Redux_Application  -------------
 
 
 
-const App = () => {
+const App = () => {  
+  
   return (
-     <div>
-       <PizzaBox/>
+    <>
+       <BrowserRouter>
+          <Routes>
+                      <Route path="/" element={<Home/>} />
+                      <Route path="userdetails/:id" element={<UserDetails/>} />
+          </Routes>
+        </BrowserRouter>
+        {/* <PizzaBox/>
        <BurgerBox/>
-       <ProductsData/>
-     </div>
+       <ProductsData/> 
+       <DemoTable/> */}
+    </>
   )
 }
 
@@ -48,6 +58,7 @@ export default App
 
 
 
+ 
 
 
 

@@ -3,7 +3,7 @@ import { FETCH_ERROR, FETCH_REQUEST, FETCH_SUCCESS } from "./ProductsTypes"
 const initialState = {
     loading :false,
     products:[],
-    error : false
+    error : []
 }
 
 const ProductsReducer = (state=initialState,action)=>{

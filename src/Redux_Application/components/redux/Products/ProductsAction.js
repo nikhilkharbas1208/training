@@ -1,3 +1,5 @@
+import WrapPromise from "../../../../Suspense/WrapPromise"
+
 export const fetchRequest = ()=>{
     return {
         type : 'FETCH_REQUEST',
@@ -22,20 +24,21 @@ export const fetchError = (message)=>{
 export const fetchProducts = ()=>{
     return (dispatch)=>{
         dispatch(fetchRequest())
-        fetch('https://fakestoreapi.com/products')
+        const promise = fetch('https://jsonplaceholder.typicode.com/users')
         .then(res=>{//res.json()
             const info =res.json();
-            console.log(info)
+            // console.log(info)
             return info
         })
         .then(json=>{
-            const pdata=json.map(product=>product.title)
-            console.log(pdata)
-            dispatch(fetchSuccess(pdata))
+            const udata=json//.map(user=>user.name)
+           console.log(udata)
+            dispatch(fetchSuccess(udata))
          })
         .catch(err=>{
             console.log(err.message)
             dispatch(fetchError(err.message))
         })
+     return WrapPromise(promise);
     }
 }

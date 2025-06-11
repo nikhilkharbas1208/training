@@ -1,27 +1,118 @@
 import { AgGridReact} from 'ag-grid-react'
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
-import { useMemo, useRef, useState } from 'react';
-import "ag-grid-community/styles/ag-grid.css"
-import "ag-grid-community/styles/ag-theme-quartz.css"
-import '../App.css'
+import { useEffect, useMemo, useRef, useState } from 'react';
+//  import "ag-grid-community/styles/ag-grid.css"
+ import "ag-grid-community/styles/ag-theme-quartz.css"
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../components/redux/Products/ProductsAction';
+import UserDetails from './UserDetails';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+// import '../App.css'
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 
-const MyCell = p =>{
-    const [count,setCount]=useState(p.value)
-    return<>
-        <button onClick={()=>window.alert(
-           " you clicked the button "
-        )}>#</button>
-        {p.value}
-    </>
-}
 const DemoTable = () => {
 
-    const  [rowData , setRowData] = useState([
+const data = useSelector(state => state.product.products)
+console.log(data)
+   const dispatch = useDispatch();
+    useEffect(()=>{
+       dispatch(fetchProducts())
+    },[])
+
+console.log("in ag grid")
+    const columnStyle = useMemo(()=>{
+        return{
+            flex:5,
+            editable:true,
+            filter:true,
+            floatingFilter:true,
+        }
+    })
+// '/userdetails'
+    const CellData = (p)=>(  
+             <Link  to={`/userdetails/${p.data.id}`}>
+                  {p.value}
+            </Link>)
+     
+    const [ colDefs,setColDefs ] = useState([
+        {  field:"username",
+            valueFormatter: p =>p.value.toUpperCase(),
+             cellRenderer :CellData,
+        },
+        {  field:"name"},
+        {  field:"email"},
+        {  field:"phone" },
+        {  field:"website",
+            headerName:"Employer Website"
+        },
+         ])
+
+  return (
+    <div>
+        <h2>DemoTable</h2>
+        <div   className="ag-theme-quartz" style={{ height: 500 }}>
+            <AgGridReact rowData={data} 
+                         columnDefs={colDefs}
+                        rowSelection={{ type: 'multiRow' }}
+                         pagination={true}
+                         paginationPageSize={15}
+                         paginationPageSizeSelector={[15,30]}
+                         defaultColDef={columnStyle}
+            />
+
+        </div>
+              
+    </div>
+  )
+}
+
+export default DemoTable
+
+
+
+
+
+
+
+// const MyCell = p =>{
+//     return<>
+//         <button onClick={()=>window.alert(
+//            " you clicked the button "
+//         )}>#</button>
+//         {p.value}
+//     </>
+// }
+        // {field: "id" ,
+        //     cellEditor:'agSelectCellEditor',
+        //     cellEditorParams:{values:[1920,7839,2733,4764]},
+        //     cellClassRules:{
+        //         'green-cell' :p =>p.value%2==0
+        //     }
+        // },
+        
+    //     {field: "title",
+            
+    //     },
+    //     {field: "completed"},
+    //     // { 
+    //     //     valueGetter: p => p.data.userId+p.data.id+p.data.title,
+    //     //     headerName : "merged",  
+    //     // },
+    //     // {
+    //     //     field:"price",
+    //     //     valueFormatter: p =>"$"+p.value.toLocaleString(),
+    //     //     cellRenderer : MyCell
+    //     // }
+    //
+
+    // const rowStyle = useMemo(()=>({
+    //     'red-row': p => p.data.completed == false
+    // }))
+    /*
+    *[
            {
-                "userId": 1,
                 "id": 1,
                 "title": "delectus ",
                 "price" : 95860,
@@ -427,66 +518,5 @@ const DemoTable = () => {
     "completed": false
   },
 
-    ])
-
-
-    const columnStyle = useMemo(()=>{
-        return{
-            flex:5,
-            editable:true,
-            filter:true,
-            floatingFilter:true,
-        }
-    })
-    const [ colDefs,setColDefs ] = useState([
-        {
-            field: "userId",
-            headerName : "sessionId",
-           checkboxSelection:true
-           
-        }, 
-        {field: "id" ,
-            cellEditor:'agSelectCellEditor',
-            cellEditorParams:{values:[1920,7839,2733,4764]},
-            cellClassRules:{
-                'green-cell' :p =>p.value%2==0
-            }
-        },
-        {field: "title",
-             valueFormatter: p =>p.value.toUpperCase()
-        },
-        {field: "completed"},
-        // { 
-        //     valueGetter: p => p.data.userId+p.data.id+p.data.title,
-        //     headerName : "merged",  
-        // },
-        // {
-        //     field:"price",
-        //     valueFormatter: p =>"$"+p.value.toLocaleString(),
-        //     cellRenderer : MyCell
-        // }
-    ])
-
-    const rowStyle = useMemo(()=>({
-        'red-row': p => p.data.completed == false
-    }))
-  return (
-    <div>
-        <h2>DemoTable</h2>
-        <div className="ag-theme-quartz-dark" style={{ height: 500 }}>
-            <AgGridReact rowData={rowData} 
-                         columnDefs={colDefs}
-                         rowSelection={'multiple'}
-                         rowClassRules={rowStyle}
-                         pagination={true}
-                         paginationPageSize={15}
-                         paginationPageSizeSelector={[20,30]}
-                         defaultColDef={columnStyle}
-            />
-
-        </div>
-    </div>
-  )
-}
-
-export default DemoTable
+   
+     */

@@ -1,7 +1,8 @@
 function WrapPromise(promise) {
   let status = 'pending'
   let response
-
+ console.log("In wraper promise")
+ console.log(promise)
   const suspender = promise.then(
     (res) => {
       status = 'success'

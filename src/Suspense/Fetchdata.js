@@ -6,7 +6,7 @@ const Fetchdata = (url) => {
   const promise = fetch(url)
     .then((res) => res.json());
    
-     return WrapPromise(promise);
+    //  return WrapPromise(promise);
   
     //const [data , setData]=useState([]);
     
