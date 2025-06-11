@@ -9,7 +9,8 @@ export const UserDetailPage = () => {
     }
     console.log(id);
     const tableRowData = useSelector((state) => state.table.rows);
-    const userData = tableRowData.find((user) => user.id === parseInt(id));
+    const filteredUsers = tableRowData.filter((user) => user.id === parseInt(id));
+    const userData = filteredUsers[0];
     const {name, email, phone, address} = userData;
     return(
         <>

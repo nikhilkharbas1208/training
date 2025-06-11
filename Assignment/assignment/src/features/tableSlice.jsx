@@ -3,7 +3,7 @@ const initialState = {
     rows: [
      {
       id: 1,
-      name: 'Leanne Graham',
+      name: 'Graham',
       username: 'Bret',
       email: 'Sincere@april.biz',
       phone: '1-770-736-8031 x56442',
@@ -13,7 +13,7 @@ const initialState = {
     },
     {
       id: 2,
-      name: 'Ervin Howell',
+      name: 'Ervin',
       username: 'Antonette',
       email: 'Shanna@melissa.tv',
       phone: '010-692-6593 x09125',
@@ -23,7 +23,7 @@ const initialState = {
     },
     {
       id: 3,
-      name: 'Clementine Bauch',
+      name: 'Clementine',
       username: 'Samantha',
       email: 'Nathan@yesenia.net',
       phone: '1-463-123-4447',
@@ -33,7 +33,7 @@ const initialState = {
     },
     {
       id: 4,
-      name: 'Patricia Lebsack',
+      name: 'Patricia ',
       username: 'Karianne',
       email: 'Julianne.OConner@kory.org',
       phone: '493-170-9623 x156',
@@ -43,7 +43,7 @@ const initialState = {
     },
     {
       id: 5,
-      name: 'Chelsey Dietrich',
+      name: 'Chelsey ',
       username: 'Kamren',
       email: 'Lucio_Hettinger@annie.ca',
       phone: '(254)954-1289',
