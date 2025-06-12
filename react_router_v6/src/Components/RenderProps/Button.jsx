@@ -1,0 +1,13 @@
+const Button = (props) => {
+    return(
+        <>
+        {props.children}
+        <button onClick={props.render}>
+            {props.text}
+        </button>
+        
+        </>
+    );
+}
+
+export default Button;
