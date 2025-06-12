@@ -57,8 +57,8 @@ console.log("in ag grid")
                          columnDefs={colDefs}
                         rowSelection={{ type: 'multiRow' }}
                          pagination={true}
-                         paginationPageSize={15}
-                         paginationPageSizeSelector={[15,30]}
+                         paginationPageSize={5}
+                         paginationPageSizeSelector={[3,5,10]}
                          defaultColDef={columnStyle}
             />
 

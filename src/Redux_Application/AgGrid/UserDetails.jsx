@@ -13,8 +13,11 @@ const UserDetails = () => {
     const filterData = udata.filter(p=>(p.id)===parseInt(userId))
     const data = filterData[0]
   return (
-    <center>
-        <div>
+        <div  style={{
+                maxWidth: '500px',
+                margin: '20px auto',
+                padding: '20px',}}
+        >
              <h2>UserDetails--{userId}</h2>
              <div>
                 <ul>
@@ -25,8 +28,9 @@ const UserDetails = () => {
                 </ul>
               </div>
         </div>
-    </center>
+   
   )
 }
 
 export default UserDetails
+
