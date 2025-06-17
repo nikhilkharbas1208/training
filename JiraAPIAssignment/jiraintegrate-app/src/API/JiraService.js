@@ -1,9 +1,10 @@
 import axios from "axios";
 
- const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
- const JIRA_BASE_URL = "https://vaishnavishinde425.atlassian.net/rest/api/3";
- const JIRA_EMAIL = "vaishnavishinde425@gmail.com"; 
- REMOVED;
+// Access env variables
+const CORS_PROXY = process.env.REACT_APP_CORS_PROXY;
+const JIRA_BASE_URL = process.env.REACT_APP_JIRA_BASE_URL;
+const JIRA_EMAIL = process.env.REACT_APP_JIRA_EMAIL;
+const JIRA_API_TOKEN = process.env.REACT_APP_JIRA_API_TOKEN;
 
 const auth = btoa(`${JIRA_EMAIL}:${JIRA_API_TOKEN}`);
 
