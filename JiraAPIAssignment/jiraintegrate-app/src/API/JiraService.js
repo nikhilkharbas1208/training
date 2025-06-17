@@ -1,10 +1,10 @@
 import axios from "axios";
 
-// const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
-// const JIRA_BASE_URL = "https://vaishnavishinde425.atlassian.net/rest/api/3";
-// const JIRA_EMAIL = "vaishnavishinde425@gmail.com"; // Your Jira email
+ const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+ const JIRA_BASE_URL = "https://vaishnavishinde425.atlassian.net/rest/api/3";
+ const JIRA_EMAIL = "vaishnavishinde425@gmail.com"; 
+ REMOVED;
 
-// Base64 encode email:token for Authorization header
 const auth = btoa(`${JIRA_EMAIL}:${JIRA_API_TOKEN}`);
 
 export const fetchIssues = async (projectKey) => {
@@ -18,7 +18,7 @@ export const fetchIssues = async (projectKey) => {
         },
       }
     );
-    return response.data; // return just the array of issues
+    return response.data; 
   } catch (error) {
     console.error("Error fetching issues:", error);
     throw error;

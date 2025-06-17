@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchIssues } from "./JiraService";
+import { fetchIssues } from "../API/JiraService";
 
 const JiraIssues = ({ projectKey }) => {
   const [issues, setIssues] = useState([]);

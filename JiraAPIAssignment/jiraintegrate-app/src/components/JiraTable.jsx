@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadIssues } from './features/jiraIssueSlice';
+import { loadIssues } from '../features/jiraIssueSlice';
 import {ClientSideRowModelModule,PaginationModule, RowSelectionModule, TextFilterModule, NumberFilterModule, TextEditorModule, NumberEditorModule,} from 'ag-grid-community';
 import { ModuleRegistry } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
@@ -12,7 +12,7 @@ ModuleRegistry.registerModules([ ClientSideRowModelModule, PaginationModule, Row
 
 const JiraTable = ({ projectKey }) => {
   const dispatch = useDispatch();
-  const { items, status, error } = useSelector((state) => state.issues);
+  const { items } = useSelector((state) => state.issues);
   console.log(items);
 
   useEffect(() => {
@@ -28,9 +28,6 @@ const JiraTable = ({ projectKey }) => {
     { headerName: 'Assignee', field: 'fields.assignee.displayName' },
     { headerName: 'Created', field: 'fields.created' },
   ];
-
-  if (status === 'loading') return <p>Loading...</p>;
-  if (status === 'failed') return <p>Error: {error}</p>;
 
   return (
     <>
