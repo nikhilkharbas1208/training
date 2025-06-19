@@ -1,2 +1,0 @@
-export const ORDER_PIZZA = 'ORDER_PIZZA'
-export const RETURN_PIZZA = 'RETURN_PIZZA'
