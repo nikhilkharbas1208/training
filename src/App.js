@@ -28,6 +28,53 @@ import BurgerBox from './Redux_Application/components/BurgerBox.js';
 import DemoTable from './Redux_Application/AgGrid/DemoTable.jsx';
 import ProductsData from './Redux_Application/components/ProductsData.js';
 import UserDetails from './Redux_Application/AgGrid/UserDetails.jsx';
+import Toggle from './RenderProps/Toggle.js';
+
+import CCAmount from './RenderProps/CurrencyConveter/CCAmount'
+import USDConverter from './RenderProps/CurrencyConveter/USDConverter'
+import YANConvert from './RenderProps/CurrencyConveter/YANConvert'
+
+//--------------Render Props----------------------- 
+
+// const App = ()=>{
+//   return(
+//       <>
+//         <Toggle  flag = {false} >
+//            { (isOn)=> isOn ? <div>toggle is On</div> : <div> toggle is off</div>}           
+//         </Toggle>
+             
+//       </>
+//   )
+// }
+
+
+// const App = () =>{
+//       return(
+//         <>
+//           <h5>from app component</h5>
+//           <CCAmount  render={(amount)=>{
+//                                       return(
+//                                         <>
+//                                             <USDConverter amount={amount}/>
+//                                             <YANConvert amount={amount}/>
+//                                         </>
+//                                       )
+//                                     }
+//                                   }
+//              >
+
+//           </CCAmount>
+//         </>
+//       )
+// }
+
+// export default App
+
+
+
+
+
+
 
 
 //      ---------  Redux_Application  -------------
@@ -44,33 +91,11 @@ const App = () => {
                       <Route path="userdetails/:id" element={<UserDetails/>} />
           </Routes>
         </BrowserRouter>
-        {/* <PizzaBox/>
-       <BurgerBox/>
-       <ProductsData/> 
-       <DemoTable/> */}
     </>
   )
 }
 
 export default App
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

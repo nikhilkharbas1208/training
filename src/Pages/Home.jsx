@@ -10,6 +10,7 @@ import DemoTable from '../Redux_Application/AgGrid/DemoTable'
 import { Consumer } from '../ContextAPI/Contexts'
 import { contextCount } from '../ContextAPI/OrderCount'
 import { ErrorBoundary } from 'react-error-boundary'
+import DisplayData from '../Redux_Application/AgGrid_RenderProps/DisplayData'
 
 const Home = () => {
 const {pc,PizzaUpdateCount,bc,BurgerUpdateCount} = useContext(contextCount)
@@ -44,12 +45,15 @@ const {pc,PizzaUpdateCount,bc,BurgerUpdateCount} = useContext(contextCount)
            <BurgerBox/>
     </ErrorBoundary>
 
-    <ErrorBoundary fallback={<p> couldn't find the DEMOTABLE COMPONENT</p>}> 
+    {/* <ErrorBoundary fallback={<p> couldn't find the DEMOTABLE COMPONENT</p>}> 
         <Suspense  fallback= {<p>user data is getting prepared to display </p>}>
            <DemoTable/>
         </Suspense>
-    </ErrorBoundary>
+    </ErrorBoundary> */}
 
+    <ErrorBoundary fallback={<p> couldn't find the DISPLAY DATA COMPONENET</p>}> 
+           <DisplayData/>
+    </ErrorBoundary>
 
 
     <Outlet/>
