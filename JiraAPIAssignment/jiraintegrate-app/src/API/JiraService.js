@@ -1,3 +1,10 @@
+// // JiraService.js
+// import axios from './Interceptor';
+
+// export const fetchIssues = async (projectKey) => {
+//   const response = await axios.get(`/rest/api/3/search?jql=project=${projectKey}`);
+//   return response.data;
+// };
 import axios from "axios";
 
 // Access env variables

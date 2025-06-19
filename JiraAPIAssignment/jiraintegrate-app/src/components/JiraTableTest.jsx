@@ -11,30 +11,33 @@ import {
   TextEditorModule,
   NumberEditorModule,
 } from 'ag-grid-community';
-import { ModuleRegistry } from 'ag-grid-community';
+import { ModuleRegistry,  AllCommunityModule} from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-
+import styled from 'styled-components';
+import ButtonStyled from './common/ButtonStyled';
+import styles from './common/JiraTableTest.module.css'
 
 ModuleRegistry.registerModules([
-  ClientSideRowModelModule,
-  PaginationModule,
-  RowSelectionModule,
-  TextFilterModule,
-  NumberFilterModule,
-  TextEditorModule,
-  NumberEditorModule,
+  AllCommunityModule
 ]);
 
 const JiraTableTest = () => {
   const { issues } = useContext(JiraIssuesContext);
   console.log(issues);
+  const getRowClass = (params) => {
+  const rowClass = params.node.rowIndex % 2 === 0
+    ? styles.alternateRow1
+    : styles.alternateRow2;
+  return `${rowClass} ${styles.hoverRow}`;
+};
+
   const columnDefs = [
     { headerName: 'Ticket Id', field: 'id' ,
       cellRenderer: (params) => {
       return (
        <NavLink
-          to={`/issue/${params.data.id}`}
+          to={`/issue/${params.data.id}`} className={styles.linkCell}
         >
           {params.value}
         </NavLink>
@@ -47,23 +50,28 @@ const JiraTableTest = () => {
     { headerName: 'Status', field: 'fields.status.name' },
     { headerName: 'Assignee', field: 'fields.assignee.displayName' },
     { headerName: 'Created', field: 'fields.created' },
+    { headerName: 'Priority', field: 'fields.priority.name' },
   ];
 
   return (
-    <>
-      <h1>Jira Tickets</h1>
+    <div className={styles.pageWrapper}>
+      <div className={styles.headerSection}>
+        <h1 className={styles.title}>Jira Tickets</h1>
+      </div>
       <NavLink to="/create" style={{ marginBottom: '10px', display: 'inline-block' }}>
-      <button>Create</button>
+      <ButtonStyled>Create</ButtonStyled>
       </NavLink>
-      <div className="ag-theme-alpine" style={{ height: 500, width: '100%' }}>
+      <ButtonStyled>Edit</ButtonStyled>
+      <div className={` ${styles.customGrid} ag-theme-alpine`} style={{ height: 500}}>
         <AgGridReact
           rowData={issues}
           columnDefs={columnDefs}
           pagination={true}
-          paginationPageSize={10}
+          paginationPageSize={10} domLayout="autoHeight" getRowClass={getRowClass}
+          onGridReady={(params) => params.api.sizeColumnsToFit()}
         />
       </div>
-    </>
+    </div>
   );
 };
 
