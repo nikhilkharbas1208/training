@@ -1,0 +1,9 @@
+export let JIRA_BASE_URL;
+export let JIRA_EMAIL;
+export let JIRA_API_TOKEN;
+export let CORS_PROXY;
+
+CORS_PROXY = process.env.REACT_APP_CORS_PROXY;
+JIRA_BASE_URL = process.env.REACT_APP_JIRA_BASE_URL;
+JIRA_EMAIL = process.env.REACT_APP_JIRA_EMAIL;
+JIRA_API_TOKEN = process.env.REACT_APP_JIRA_API_TOKEN;
