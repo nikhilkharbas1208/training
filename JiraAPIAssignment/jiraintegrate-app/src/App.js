@@ -6,13 +6,12 @@ import { JiraIssuesProvider } from './context/JiraIssuesContext';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './components/ErrorBoundry';
-import IssueDetailsPage from './components/IssueDetailsPage';
 import Skeleton from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
-import CreateIssuePage from './components/CreateIssuePage';
 
 const JiraTableTest = lazy(() => import('./components/JiraTableTest'));
-
+const IssueDetailsPage = lazy(() => import('./components/IssueDetailsPage'));
+const CreateIssuePage = lazy(() => import('./components/CreateIssuePage'));
 // const ErrorBoundary = ({ children }) => {
 //   return (
 //     <Suspense fallback={<p>Loading...</p>}>
