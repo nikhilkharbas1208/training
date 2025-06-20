@@ -1,2 +1,0 @@
-export const ORDER_BURGER = 'ORDER_BURGER'
-export const RETURN_BURGER = 'RETURN_BURGER'
