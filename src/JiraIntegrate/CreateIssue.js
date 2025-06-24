@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { use, useEffect, useState } from 'react';
 
 export default function CreateIssue() {
-  const [projectKey, setProjectKey] = useState('TEST');
-  const [issueType, setIssueType] = useState('Task');
+  const [projectKey, setProjectKey] = useState('');
+  const [issueType, setIssueType] = useState('');
   const [summary, setSummary] = useState('');
   const [description, setDescription] = useState('');
   const [result, setResult] = useState(null);
+ 
+  const username = process.env.REACT_APP_USERNAME
+  const apiToken =process.env.REACT_APP_API_TOKEN
+  const auth = btoa(`${username}:${apiToken}`);
 
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = {
@@ -24,22 +29,20 @@ export default function CreateIssue() {
       }
     };
 
-          const username = process.env.REACT_APP_USERNAME
-      const apiToken =process.env.REACT_APP_API_TOKEN
-      const auth = btoa(`${username}:${apiToken}`);
-
-    try {
-      const res = await fetch('/rest/api/3/issue', {
-        method: 'POST',
-        headers: {  'Authorization': `Basic ${auth}`,
-             'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      setResult(await res.json());
-    } catch (err) {
-      setResult({ error: err.message });
-    }
+         
+          try {
+            const res = await fetch('/rest/api/3/issue', {
+              method: 'POST',
+              headers: {  'Authorization': `Basic ${auth}`,
+                  'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            setResult(await res.json());
+          } catch (err) {
+            setResult({ error: err.message });
+          }
   };
+  
 
   return (
     <center>

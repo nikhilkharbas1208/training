@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 const JiraLogin = ({render}) => {
   const [issues, setIssues] = useState([]);
   const [error, setError] = useState(null);
+  const [Result,setResult] = useState('');
+  const username = process.env.REACT_APP_USERNAME
+  const apiToken =process.env.REACT_APP_API_TOKEN
+  const auth = btoa(`${username}:${apiToken}`);
   let rowData;
   
 // '/issuedetails'
@@ -12,6 +16,30 @@ const JiraLogin = ({render}) => {
         {p.value}
       </Link>
     )   
+    const DeleteIssueHandler=async (id)=>{
+      console.log("hi hello",id)
+        try {
+      const res = await fetch(`/rest/api/3/issue/${id}`, {
+        method: 'DELETE',
+        headers: {  'Authorization': `Basic ${auth}`, },
+      });
+      setResult( res);
+      console.log(res);
+    } catch (err) {
+      setResult({ error: err.message });
+    } 
+   }
+     const DeleteData = (p)=>{
+       console.log(p.data.id);
+       return ( <button onClick={()=>DeleteIssueHandler(p.data.id)} style={{
+                              padding: '2px 10px',
+                              fontSize: '17px',
+                              border: 'none',
+                              borderRadius: '4px',
+                              backgroundColor: '#DC3545',
+                              color: '#fff'
+                          }}>DeleteIssue</button>)
+     }
     const [ colDefs,setColDefs ] = useState([
         
         // {  field:"fields.customfield_10020.name",
@@ -37,8 +65,10 @@ const JiraLogin = ({render}) => {
         {  field:"fields.reporter.displayName",
             headerName:"Reporter"
         },
-        { field:"",
-          headerName:"button"
+        { 
+          field :"self",
+          headerName:"",
+          cellRenderer:DeleteData,
         }
         
          ])
@@ -54,11 +84,6 @@ const JiraLogin = ({render}) => {
     })
 useEffect(() => {
     const fetchIssues = async () => {
-      const username = process.env.REACT_APP_USERNAME
-      const apiToken =process.env.REACT_APP_API_TOKEN
-       const domain = process.env.REACT_APP_API_DOMAIN
-
-      const auth = btoa(`${username}:${apiToken}`); // Base64 encode for Basic Auth
       const projectKey="JIR"
        
       try {

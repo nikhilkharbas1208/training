@@ -22,19 +22,23 @@ const DisplayData = () => {
 
    const [id,setId]=useState("")
    
-   const DeleteIssueHandler=async (id)=>{
-      console.log("hi hello",id)
-        try {
-      const res = await fetch(`/rest/api/3/issue/${id}`, {
-        method: 'DELETE',
-        headers: {  'Authorization': `Basic ${auth}`, },
-      });
-      setResult(await res.json());
-    } catch (err) {
-      setResult({ error: err.message });
+  //  const DeleteIssueHandler=async (id)=>{
+  //     console.log("hi hello",id)
+  //       try {
+  //     const res = await fetch(`/rest/api/3/issue/${id}`, {
+  //       method: 'DELETE',
+  //       headers: {  'Authorization': `Basic ${auth}`, },
+  //     });
+  //     setResult( res);
+  //     console.log(res);
+  //   } catch (err) {
+  //     setResult({ error: err.message });
+  //   } 
+  //  }
+
+   const UpdateIssueHandler =()=>{
+      navigate ('/updateissue')
     }
-     
-   }
   return (
     <div>
         <h6>DisplayData</h6>
@@ -48,10 +52,19 @@ const DisplayData = () => {
                               color: '#fff'
                         }}  >CreateIssue</button>
         <br/><br/>
-        
+
+         <button onClick={UpdateIssueHandler} style={{
+                              padding: '10px 20px',
+                              fontSize: '17px',
+                              border: 'none',
+                              borderRadius: '4px',
+                              marginRight: '18px',
+                              backgroundColor: '	#008000',
+                              color: '#fff'
+                        }}  >UpdateIssue</button>
+        <br/><br/>
                              
-                             
-        <button onClick={()=>DeleteIssueHandler(id)} style={{
+        {/* <button onClick={()=>DeleteIssueHandler(id)} style={{
                               padding: '10px 20px',
                               fontSize: '17px',
                               border: 'none',
@@ -60,16 +73,17 @@ const DisplayData = () => {
                               color: '#fff'
                           }}>DeleteIssue</button>
         <input type='text' placeholder='enter the issue id/key' onChange={(e)=>setId(e.target.value)} style={{ padding: '10px 20px',   borderRadius: '4px', marginRight: '18px',}}/>
-                          {/* onClick={()=>onClickHandler (quantity)} */}
-                          
+                       
 
        {result && (
         <div style={{color:'#DC3545'}}>
-          {result.key
+          {result.ok
             ? "data deleted"
-            : result.errorMessages}
+            : `${result.statusText}`}
         </div>
       )}
+      <br/><br/> */}
+      
 
         <JiraLogin   render = {
             (rowData,colDefs,columnStyle)=>(
