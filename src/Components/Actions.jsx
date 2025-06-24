@@ -13,6 +13,7 @@ export const deleteIssue = async (issueId) => {
     return response.status === 204;
   } catch (err) {
     console.error("Failed to delete issue:", err);
+    alert("Failed to delete issue");
     return false;
   }
 };
