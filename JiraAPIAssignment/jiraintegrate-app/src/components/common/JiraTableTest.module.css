@@ -1,0 +1,54 @@
+.headerSection {
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 30px;
+  color: #ffffff;
+  background-color: #398cef;
+}
+
+.buttonSection {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.alternateRow1 {
+  background-color: #e6f2ff;
+}
+
+.alternateRow2 {
+  background-color: #d0e7ff;
+}
+
+.linkCell {
+  color: #1d6edb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.linkCell:hover {
+  text-decoration: underline;
+  color: #144fa8;
+}
+
+.hoverRow:hover {
+  background-color: #c2dcff;
+  cursor: pointer;
+}
+
+.customGrid :global(.ag-header) {
+  background-color: #398cef;
+}
+
+.customGrid :global(.ag-header-cell-label) {
+  color: #ffffff;
+  font-size: 14px;
+  padding: 6px 10px;
+  width: 100% !important;
+  box-sizing: border-box;
+}
+.pageWrapper {
+  margin: 4px;
+}

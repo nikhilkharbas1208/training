@@ -1,11 +1,12 @@
-import axios from "axios";
+// // JiraService.js
+// import axios from './Interceptor';
 
- 
-// Access env variables
-const CORS_PROXY = process.env.REACT_APP_CORS_PROXY;
-const JIRA_BASE_URL = process.env.REACT_APP_JIRA_BASE_URL;
-const JIRA_EMAIL = process.env.REACT_APP_JIRA_EMAIL;
-const JIRA_API_TOKEN = process.env.REACT_APP_JIRA_API_TOKEN;
+// export const fetchIssues = async (projectKey) => {
+//   const response = await axios.get(`/rest/api/3/search?jql=project=${projectKey}`);
+//   return response.data;
+// };
+import axios from "axios";
+import { JIRA_API_TOKEN, JIRA_EMAIL } from "../constants/UrlConstants";
 
 const auth = btoa(`${JIRA_EMAIL}:${JIRA_API_TOKEN}`);
 
