@@ -1,9 +1,10 @@
 // CreateIssuePage.jsx
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { JIRA_API_TOKEN, JIRA_EMAIL } from '../constants/UrlConstants';
 import styles from './common/CreateIssueForm.module.css';
+import { JiraIssuesContext } from '../context/JiraIssuesContext';
 
 const CreateIssuePage = () => {
   const [summary, setSummary] = useState('');
@@ -13,6 +14,7 @@ const CreateIssuePage = () => {
   const [priority, setPriority] = useState('Medium');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+   const { refreshIssues } = useContext(JiraIssuesContext);
 
   const auth = btoa(`${JIRA_EMAIL}:${JIRA_API_TOKEN}`);
 
@@ -53,6 +55,7 @@ const CreateIssuePage = () => {
           'Content-Type': 'application/json',
         },
       });
+      refreshIssues();
       navigate('/');
     } catch (error) {
       console.error('Issue creation failed:', error);

@@ -7,9 +7,7 @@ export const JiraIssuesProvider = ({ projectKey, children }) => {
   const [issues, setIssues] = useState([]);
   const [loading, setloading] = useState([]);
   const [error, seterror] = useState([]);
-
-  useEffect(() => {
-    const loadIssues = async () => {
+  const loadIssues = async () => {
        try {
         setloading(true);
         const data = await fetchIssues(projectKey);
@@ -21,13 +19,16 @@ export const JiraIssuesProvider = ({ projectKey, children }) => {
       }
     };
 
+
+  useEffect(() => {
+    
     if (projectKey) {
       loadIssues();
     }
   }, [projectKey]);
 
   return (
-    <JiraIssuesContext.Provider value={{ issues, loading, error }}>
+    <JiraIssuesContext.Provider value={{ issues, loading, error, refreshIssues:loadIssues}}>
       {children}
     </JiraIssuesContext.Provider>
   );
