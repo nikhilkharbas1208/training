@@ -9,5 +9,4 @@ const LoaderComponent = ({ message = "Loading..." }) => {
     </div>
   );
 };
-
 export default LoaderComponent;
