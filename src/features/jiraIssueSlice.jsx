@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchIssues } from '../API/JiraService';
+import { fetchIssues } from '../services/JiraService';
+
 
 
 export const loadIssues = createAsyncThunk(

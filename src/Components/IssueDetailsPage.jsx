@@ -6,12 +6,14 @@ import { JIRA_API_TOKEN, JIRA_EMAIL } from "../constants/UrlConstants";
 import styles from './common/JiraIssueDetails.module.css';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useTranslation } from 'react-i18next';
 
 const JiraIssueDetails = () => {
   const { issueId } = useParams();
   const [issue, setIssue] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const auth = btoa(`${JIRA_EMAIL}:${JIRA_API_TOKEN}`);
 
   useEffect(() => {
@@ -46,15 +48,15 @@ const JiraIssueDetails = () => {
     style={{ margin: "100px auto" }}
   />
     ) : (
-        <div className={styles.card}>
-        <h2 className={styles.title}>Issue: {issue.key}</h2>
-        <p className={styles.field}><span className={styles.label}>Summary:</span> <span className={styles.value}>{issue.fields.summary}</span></p>
-        <p className={styles.field}><span className={styles.label}>Type:</span> <span className={styles.value}>{issue.fields.issuetype.name}</span></p>
-        <p className={styles.field}><span className={styles.label}>Status:</span> <span className={styles.value}>{issue.fields.status.name}</span></p>
-        <p className={styles.field}><span className={styles.label}>Assignee:</span> <span className={styles.value}>{issue.fields.assignee?.displayName || "Unassigned"}</span></p>
-        <p className={styles.field}><span className={styles.label}>Priority:</span> <span className={styles.value}>{issue.fields.priority?.name || "None"}</span></p>
-        <p className={styles.field}><span className={styles.label}>Description:</span><br /><span className={styles.value}>{issue.fields.description?.content?.[0]?.content?.[0]?.text || 'No description'}</span></p>
-        <button className={styles.backButton} onClick={() => navigate('/')}>Back</button>
+       <div className={styles.card}>
+        <h2 className={styles.title}>{t('issue')}: {issue.key}</h2>
+        <p className={styles.field}><span className={styles.label}>{t('summary')}:</span> <span className={styles.value}>{issue.fields.summary}</span></p>
+        <p className={styles.field}><span className={styles.label}>{t('type')}:</span> <span className={styles.value}>{issue.fields.issuetype.name}</span></p>
+        <p className={styles.field}><span className={styles.label}>{t('status')}:</span> <span className={styles.value}>{issue.fields.status.name}</span></p>
+        <p className={styles.field}><span className={styles.label}>{t('assignee')}:</span> <span className={styles.value}>{issue.fields.assignee?.displayName || "Unassigned"}</span></p>
+        <p className={styles.field}><span className={styles.label}>{t('priority')}:</span> <span className={styles.value}>{issue.fields.priority?.name || "None"}</span></p>
+        <p className={styles.field}><span className={styles.label}>{t('description')}:</span><br /><span className={styles.value}>{issue.fields.description?.content?.[0]?.content?.[0]?.text || 'No description'}</span></p>
+        <button className={styles.backButton} onClick={() => navigate('/')}>{t('back')}</button>
       </div>
       )}
     </div>

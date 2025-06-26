@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { fetchIssues } from '../API/JiraService';
+import { fetchIssues } from '../services/JiraService';
 
 export const JiraIssuesContext = createContext();
 

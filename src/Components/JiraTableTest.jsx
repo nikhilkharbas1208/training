@@ -11,10 +11,11 @@ import styles from './common/JiraTableTest.module.css';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { JIRA_API_TOKEN, JIRA_BASE_URL, JIRA_EMAIL } from '../constants/UrlConstants';
-import axios from 'axios';
 import { FaTrash } from 'react-icons/fa';
-import { deleteIssue } from './Actions';
 import LoaderComponent from './common/LoaderComponent';
+import { deleteIssue, updateIssues } from '../services/JiraService';
+import { useTranslation } from 'react-i18next';
+
 
 ModuleRegistry.registerModules([
   AllCommunityModule
@@ -25,12 +26,13 @@ const JiraTableTest = () => {
   const [editMode, setEditMode] = useState(false);
   const [editedRows, setEditedRows] = useState({});
   const { issues, loading, error, refreshIssues } = useContext(JiraIssuesContext);
-  const [deleteComponent, setDeleteComponent] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const priorityOptions = ['Highest', 'High', 'Medium', 'Low', 'Lowest'];
   const issueTypeOptions = ['Bug', 'Task'];
+  
 
   console.log(issues);
   const getRowClass = (params) => {
@@ -39,6 +41,7 @@ const JiraTableTest = () => {
       : styles.alternateRow2;
     return `${rowClass} ${styles.hoverRow}`;
   };
+
   const handleDeleteClick = async (issueId) => {
     const confirm = window.confirm("Are you sure you want to Delete the issue?");
     if (!confirm) return;
@@ -53,7 +56,7 @@ const JiraTableTest = () => {
   const auth = btoa(`${JIRA_EMAIL}:${JIRA_API_TOKEN}`);
   const columnDefs = [
     {
-      headerName: 'Ticket Id', editable: false, field: 'id',
+      headerName: t('ticketid'), editable: false, field: 'id',
       cellRenderer: (params) => {
         return (
           <NavLink
@@ -65,24 +68,24 @@ const JiraTableTest = () => {
       },
     },
     {
-      headerName: 'Type', field: 'fields.issuetype.name', editable: editMode, cellEditor: 'agSelectCellEditor',
+      headerName: t('type'), field: 'fields.issuetype.name', editable: editMode, cellEditor: 'agSelectCellEditor',
       cellEditorParams: {
         values: issueTypeOptions,
       },
     },
-    { headerName: 'Title', field: 'fields.customfield_10068', editable: editMode },
-    { headerName: 'Summary', field: 'fields.summary', editable: editMode },
-    { headerName: 'Status', field: 'fields.status.name' },
-    { headerName: 'Assignee', field: 'fields.assignee.displayName' },
-    { headerName: 'Created', field: 'fields.created', },
+    { headerName: t('title'), field: 'fields.customfield_10068', editable: editMode },
+    { headerName: t('summary'), field: 'fields.summary', editable: editMode },
+    { headerName: t('status'), field: 'fields.status.name' },
+    { headerName: t('assignee'), field: 'fields.assignee.displayName' },
+    { headerName: t('created'), field: 'fields.created', },
     {
-      headerName: 'Priority', field: 'fields.priority.name', editable: editMode, cellEditor: 'agSelectCellEditor',
+      headerName: t('priority'), field: 'fields.priority.name', editable: editMode, cellEditor: 'agSelectCellEditor',
       cellEditorParams: {
         values: priorityOptions,
       },
     },
     {
-      headerName: "Delete",
+      headerName: t("delete"),
       field: "id",
       filter: false,
       sortable: false,
@@ -116,29 +119,8 @@ const JiraTableTest = () => {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      for (const id in editedRows) {
-        const row = editedRows[id];
-        const proxy = "https://cors-anywhere.herokuapp.com/";
-        await axios.put(
-          `${proxy}${JIRA_BASE_URL}/issue/${id}`,
-          {
-            fields: {
-              summary: row.fields.summary,
-              customfield_10068: row.fields.customfield_10068,
-              priority: { name: row.fields.priority.name },
-              issuetype: { name: row.fields.issuetype.name },
-            }
-          },
-          {
-            headers: {
-              Authorization: `Basic ${btoa(`${JIRA_EMAIL}:${JIRA_API_TOKEN}`)}`,
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-      }
+      await updateIssues(editedRows);
+      
       alert("All updates saved!");
       setEditedRows({});
       setEditMode(false);
@@ -163,19 +145,16 @@ const JiraTableTest = () => {
         {loading ? (
           <Skeleton height={32} width={200} style={{ marginBottom: '20px' }} />
         ) : (
-          <h1 className={styles.title}><center>Jira Tickets</center></h1>
+          <h1 className={styles.title}><center>{t('jiraTicket')}</center></h1>
         )}
       </div>
       {isDeleting && <LoaderComponent message="Deleting issue..." />}
       {isSaving && <LoaderComponent message="Saving changes..." />}
 
-
-
-
       <NavLink to="/create" style={{ marginBottom: '10px', display: 'inline-block' }}>
-        <ButtonStyled>Create</ButtonStyled>
+        <ButtonStyled>{t('create')}</ButtonStyled>
       </NavLink>
-      <ButtonStyled onClick={handleEdit} disabled={editMode}>Edit</ButtonStyled>
+      <ButtonStyled onClick={handleEdit} disabled={editMode}>{t('edit')}</ButtonStyled>
       {loading ? (
         <div style={{ marginTop: '20px' }}>
           <Skeleton height={40} count={10}
@@ -210,10 +189,10 @@ const JiraTableTest = () => {
           onClick={handleSave}
           disabled={!editMode || Object.keys(editedRows).length === 0}
         >
-          Save
+          {t('save')}
         </ButtonStyled>
         <ButtonStyled onClick={handleCancel} style={{ marginLeft: '10px' }} disabled={!editMode}>
-          Cancel
+          {t('cancel')}
         </ButtonStyled>
       </div>
     </div>

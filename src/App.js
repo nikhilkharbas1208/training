@@ -8,6 +8,8 @@ import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './components/ErrorBoundry';
 import Skeleton from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
+import './i18n'; 
+
 
 const JiraTableTest = lazy(() => import('./components/JiraTableTest'));
 const IssueDetailsPage = lazy(() => import('./components/IssueDetailsPage'));

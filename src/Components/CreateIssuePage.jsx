@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { JIRA_API_TOKEN, JIRA_EMAIL } from '../constants/UrlConstants';
 import styles from './common/CreateIssueForm.module.css';
 import { JiraIssuesContext } from '../context/JiraIssuesContext';
+import LoaderComponent from './common/LoaderComponent';
 
 const CreateIssuePage = () => {
   const [summary, setSummary] = useState('');
@@ -69,6 +70,7 @@ const CreateIssuePage = () => {
     <div className={styles.wrapper}>
       <div className={styles.card}>
         <h2 className={styles.title}>Create New Jira Issue</h2>
+        {loading && <LoaderComponent message="Creating issue..." />}
         <form onSubmit={handleSubmit}>
           <label className={styles.label}>Title</label>
           <input
@@ -116,10 +118,9 @@ const CreateIssuePage = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
 
-
           <div className={styles.actions}>
             <button className={styles.button} type="submit" disabled={loading}>
-              {loading ? 'Creating...' : 'Create'}
+              Create
             </button>
             <button
               className={styles.cancel}
