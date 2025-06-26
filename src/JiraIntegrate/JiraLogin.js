@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const JiraLogin = ({render}) => {
   const [issues, setIssues] = useState([]);
@@ -8,6 +8,7 @@ const JiraLogin = ({render}) => {
   const username = process.env.REACT_APP_USERNAME
   const apiToken =process.env.REACT_APP_API_TOKEN
   const auth = btoa(`${username}:${apiToken}`);
+  const navigate = useNavigate()
   let rowData;
   
 // '/issuedetails'
@@ -30,7 +31,7 @@ const JiraLogin = ({render}) => {
     } 
    }
      const DeleteData = (p)=>{
-       console.log(p.data.id);
+      //  console.log(p.data.id);
        return ( <button onClick={()=>DeleteIssueHandler(p.data.id)} style={{
                               padding: '2px 10px',
                               fontSize: '17px',
@@ -39,6 +40,22 @@ const JiraLogin = ({render}) => {
                               backgroundColor: '#DC3545',
                               color: '#fff'
                           }}>DeleteIssue</button>)
+     }
+     const UpdateIssueHandler =(id)=>{
+      navigate (`/updateissue/${id}`)
+    }
+
+     const UpdateData =(p)=>{
+      return ( <button onClick={()=>UpdateIssueHandler(p.data.id)} style={{
+                              padding: '2px 10px',
+                              fontSize: '17px',
+                              border: 'none',
+                              borderRadius: '4px',
+                              marginRight: '18px',
+                              backgroundColor: '	#008000',
+                              color: '#fff'
+                        }}  >UpdateIssue</button>)
+      
      }
     const [ colDefs,setColDefs ] = useState([
         
@@ -69,6 +86,11 @@ const JiraLogin = ({render}) => {
           field :"self",
           headerName:"",
           cellRenderer:DeleteData,
+        },
+        {
+          field :"expand",
+          headerName:"",
+          cellRenderer:UpdateData,
         }
         
          ])

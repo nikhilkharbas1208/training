@@ -18,7 +18,7 @@ function App() {
         <Route path='/' element={<DisplayData/>}/>
         <Route path="issuedetails/:id" element={<IssueDetails/>}/>
         <Route path="/createissue" element={<CreateIssue/>}/>
-        <Route path="/updateissue" element={<EditIssue/>}/>
+        <Route path="/updateissue/:id" element={<EditIssue/>}/>
         <Route/>
       </Routes>
     </BrowserRouter>
