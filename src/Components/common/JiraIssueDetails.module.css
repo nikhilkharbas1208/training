@@ -47,3 +47,31 @@
 .backButton:hover {
   background-color: #003d99;
 }
+
+:global(body.dark) {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+:global(body.dark) .card {
+  background-color: #1e1e1e !important;
+  border-left: 8px solid #398cef !important;
+  color: #ffffff !important;
+}
+
+:global(body.dark) .label {
+  color: #cccccc !important;
+}
+
+:global(body.dark) .value {
+  color: #dddddd !important;
+}
+
+:global(body.dark) .backButton {
+  background-color: #398cef !important;
+  color: white !important;
+}
+
+:global(body.dark) .backButton:hover {
+  background-color: #2f74c0 !important;
+}

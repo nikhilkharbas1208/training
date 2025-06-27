@@ -1,4 +1,3 @@
-// ButtonStyled.js or inside your component file
 
 import styled from 'styled-components';
 

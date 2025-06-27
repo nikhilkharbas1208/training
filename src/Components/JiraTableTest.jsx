@@ -32,7 +32,7 @@ const JiraTableTest = () => {
   const navigate = useNavigate();
   const priorityOptions = ['Highest', 'High', 'Medium', 'Low', 'Lowest'];
   const issueTypeOptions = ['Bug', 'Task'];
-  
+
 
   console.log(issues);
   const getRowClass = (params) => {
@@ -42,18 +42,6 @@ const JiraTableTest = () => {
     return `${rowClass} ${styles.hoverRow}`;
   };
 
-  const handleDeleteClick = async (issueId) => {
-    const confirm = window.confirm("Are you sure you want to Delete the issue?");
-    if (!confirm) return;
-
-    setIsDeleting(true);
-    await deleteIssue(issueId);
-    setIsDeleting(false);
-    refreshIssues();
-  };
-
-
-  const auth = btoa(`${JIRA_EMAIL}:${JIRA_API_TOKEN}`);
   const columnDefs = [
     {
       headerName: t('ticketid'), editable: false, field: 'id',
@@ -120,7 +108,7 @@ const JiraTableTest = () => {
     setIsSaving(true);
     try {
       await updateIssues(editedRows);
-      
+
       alert("All updates saved!");
       setEditedRows({});
       setEditMode(false);
@@ -133,6 +121,17 @@ const JiraTableTest = () => {
       setIsSaving(false);
     }
   };
+
+  const handleDeleteClick = async (issueId) => {
+    const confirm = window.confirm("Are you sure you want to Delete the issue?");
+    if (!confirm) return;
+
+    setIsDeleting(true);
+    await deleteIssue(issueId);
+    setIsDeleting(false);
+    refreshIssues();
+  };
+
 
 
   //   if (Math.random() > 0.5) {

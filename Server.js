@@ -5,7 +5,7 @@ const host = 'localhost';
 const port = 8080;
 
 corsAnywhere.createServer({
-  originWhitelist: [], // Allow all origins
+  originWhitelist: [], 
 }).listen(port, host, () => {
   console.log(`CORS Anywhere running at http://${host}:${port}`);
 });
