@@ -27,14 +27,15 @@ i18n
                     edit: "Edit",
                     create: "Create",
                     cancel: "Cancel",
-                    jiraTicket: "Jira Ticket"
+                    jiraTicket: "Jira Ticket",
+                    createNewJiraIssue: "Create New Jira Issue",
                 }
             },
             hi: {
                 translation: {
                     issue: "मुद्दा",
                     created: "बनाया गया",
-                    
+                    createNewJiraIssue: "नया जिरा मुद्दा बनाएं",
                     title: "शीर्षक",
                     summary: "सारांश",
                     type: "प्रकार",
@@ -54,6 +55,7 @@ i18n
             mr: {
                 translation: {
                     ticketid: "तिकीट आयडी",
+                    createNewJiraIssue: "नवीन जिरा समस्या तयार करा",
                     created: "तयार केले",
                     title: "शीर्षक",
                     issue: "समस्या",
@@ -75,6 +77,7 @@ i18n
             fr: {
                 translation: {
                     issue: "Problème",
+                    createNewJiraIssue: "Créer un nouveau ticket Jira",
                     created: "Créé",
                     title: "Titre",
                     summary: "Résumé",

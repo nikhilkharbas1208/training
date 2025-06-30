@@ -9,6 +9,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { useTranslation } from 'react-i18next';
 import JiraIssueFetcher from "./IssueFetcher";
 import WithTheme from "./WithTheme";
+import IssueDetailsSkeleton from "./common/IssueDetailsSkeleton";
 
 const JiraIssueDetails = ({ theme }) => {
   const { issueId } = useParams();
@@ -48,13 +49,14 @@ const JiraIssueDetails = ({ theme }) => {
   }}>
       <JiraIssueFetcher issueId={issueId} render={({ issue, loading }) => (
         loading ? (
-          <Skeleton
-            height={300}
-            width={600}
-            borderRadius={8}
-            animation="wave"
-            style={{ margin: "100px auto" }}
-          />
+          // <Skeleton
+          //   height={300}
+          //   width={600}
+          //   borderRadius={8}
+          //   animation="wave"
+          //   style={{ margin: "100px auto" }}
+          // />
+          <IssueDetailsSkeleton/>
         ) : (
           <div className={styles.card}>
             <h2 className={styles.title}>{t('issue')}: {issue.key}</h2>
@@ -63,7 +65,7 @@ const JiraIssueDetails = ({ theme }) => {
             <p className={styles.field}><span className={styles.label}>{t('status')}:</span> <span className={styles.value}>{issue.fields.status.name}</span></p>
             <p className={styles.field}><span className={styles.label}>{t('assignee')}:</span> <span className={styles.value}>{issue.fields.assignee?.displayName || "Unassigned"}</span></p>
             <p className={styles.field}><span className={styles.label}>{t('priority')}:</span> <span className={styles.value}>{issue.fields.priority.name}</span></p>
-            <p className={styles.field}><span className={styles.label}>{t('description')}:</span><br /><span className={styles.value}>{issue.fields.description?.content?.[0]?.content?.[0]?.text || 'No description'}</span></p>
+            <p className={styles.field}><span className={styles.label}>{t('description')}:</span><br /><span className={styles.value}>{issue.fields.description.content?.[0]?.content?.[0]?.text || 'No description'}</span></p>
             <button className={styles.backButton} onClick={() => navigate(-1)}>{t('back')}</button>
           </div>
         )

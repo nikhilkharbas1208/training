@@ -15,6 +15,7 @@ import { FaTrash } from 'react-icons/fa';
 import LoaderComponent from './common/LoaderComponent';
 import { deleteIssue, updateIssues } from '../services/JiraService';
 import { useTranslation } from 'react-i18next';
+import LanguageSelector from './LanguageSelector';
 
 
 ModuleRegistry.registerModules([
@@ -139,7 +140,8 @@ const JiraTableTest = () => {
   // }
 
   return (
-    <div className={styles.pageWrapper}>
+    <div className={styles.pageWrapper} style={{ position: 'relative' }}>
+      <LanguageSelector/>
       <div className={styles.headerSection}>
         {loading ? (
           <Skeleton height={32} width={200} style={{ marginBottom: '20px' }} />

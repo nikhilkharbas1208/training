@@ -1,12 +1,10 @@
-// CreateIssuePage.jsx
 import React, { useContext, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { JIRA_API_TOKEN, JIRA_EMAIL } from '../constants/UrlConstants';
 import styles from './common/CreateIssueForm.module.css';
 import { JiraIssuesContext } from '../context/JiraIssuesContext';
 import LoaderComponent from './common/LoaderComponent';
 import { createIssue } from '../services/JiraService';
+import { useTranslation } from 'react-i18next';
 
 const CreateIssuePage = () => {
   const [summary, setSummary] = useState('');
@@ -16,9 +14,9 @@ const CreateIssuePage = () => {
   const [priority, setPriority] = useState('Medium');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { refreshIssues } = useContext(JiraIssuesContext);
 
-  const auth = btoa(`${JIRA_EMAIL}:${JIRA_API_TOKEN}`);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,10 +43,10 @@ const CreateIssuePage = () => {
 return (
   <div className={styles.wrapper}>
     <div className={styles.card}>
-      <h2 className={styles.title}>Create New Jira Issue</h2>
+      <h2 className={styles.title}>{t('createNewJiraIssue')}</h2>
       {loading && <LoaderComponent message="Creating issue..." />}
       <form onSubmit={handleSubmit}>
-        <label className={styles.label}>Title</label>
+        <label className={styles.label}>{t('title')}</label>
         <input
           className={styles.input}
           value={customTitle}
@@ -56,7 +54,7 @@ return (
           required
         />
 
-        <label className={styles.label}>Issue Type</label>
+        <label className={styles.label}>{t('issue')}{t('type')}</label>
         <select
           className={styles.input}
           value={issueType}
@@ -66,7 +64,7 @@ return (
           <option>Bug</option>
         </select>
 
-        <label className={styles.label}>Summary</label>
+        <label className={styles.label}>{t('summary')}</label>
         <input
           className={styles.input}
           value={summary}
@@ -74,7 +72,7 @@ return (
           required
         />
 
-        <label className={styles.label}>Priority</label>
+        <label className={styles.label}>{t('priority')}</label>
         <select
           className={styles.input}
           value={priority}
@@ -87,7 +85,7 @@ return (
           <option>Lowest</option>
         </select>
 
-        <label className={styles.label}>Description</label>
+        <label className={styles.label}>{t('description')}</label>
         <textarea
           className={styles.textarea}
           value={description}
@@ -96,14 +94,14 @@ return (
 
         <div className={styles.actions}>
           <button className={styles.button} type="submit" disabled={loading}>
-            Create
+            {t('create')}
           </button>
           <button
             className={styles.cancel}
             type="button"
             onClick={() => navigate('/')}
           >
-            Cancel
+            {t('cancel')}
           </button>
         </div>
       </form>
