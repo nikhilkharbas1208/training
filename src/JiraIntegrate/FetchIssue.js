@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import React, { Suspense, useContext, useEffect, useState } from 'react'
+import { jiraContext } from '..';
 
 
 
@@ -9,65 +9,45 @@ import { useParams } from 'react-router-dom';
 const withFetchIssue = (Component,data) => {
     return function FetchIssue1(){
 
-    const [issues, setIssues] = useState([]);
-    const [error, setError] = useState(null);
     const [projectKey, setProjectKey] = useState('');
     const [issueType, setIssueType] = useState('');
     const [summary, setSummary] = useState('');
     const [description, setDescription] = useState('');
-    const [result, setResult] = useState(null);
     const [issueKey,setIssuekey]=useState('');
-    
-    
-    
-    
-    const username = process.env.REACT_APP_USERNAME
-    const apiToken =process.env.REACT_APP_API_TOKEN
-    const auth = btoa(`${username}:${apiToken}`);
-    
-    
-     const handleButton = () => {
+    const {userData} = useContext(jiraContext)
+    const auth=userData.auth
+    const [loading,setLoading]=useState(true)
+    const handleButton = () => {
            
         const fetchIssues = async () => {
              let id = await data();
             console.log("issue id is",id)
           try {
             const response = await fetch(`/rest/api/3/issue/${id}`, {
-      headers: {
-        'Authorization': `Basic ${auth}`,
-        'Accept': 'application/json',
-      }
-    })
+            headers: {
+              'Authorization': `Basic ${auth}`,
+              'Accept': 'application/json',}
+                  })
            if (!response.ok) {
               throw new Error(`Error: ${response.statusText}`);
             }
-    
             const datainfo = await response.json();
             console.log(datainfo)
-            setIssues(datainfo);
             setProjectKey(datainfo?.fields?.project?.key || '');
             setIssueType(datainfo?.fields?.issuetype?.name || '');
             setSummary(datainfo?.fields?.summary  || '');
             setIssuekey(datainfo?.key || '')
             setDescription(datainfo?.fields?.description?.content[0]?.content[0]?.text || '');
+            setLoading(false)
           } catch (err) {
             console.log(err.message)
-            setError(err.message);
           }
         };
          fetchIssues();
     }
-// const timeoutID = setTimeout( handleButton() , 2000);
-   
-     useEffect(()=>handleButton(),[])  
-
-    
-    // handleButton()
- console.log(projectKey,issueType,summary,description,issueKey)
-
-   return (
-            <Component  data={{projectKey,issueType,summary,description,issueKey}}/>
-   )
+   useEffect(()=>handleButton(),[])  
+   console.log(projectKey,issueType,summary,description,issueKey)
+   return ( <Component  data={{projectKey,issueType,summary,description,issueKey,loading}}/>)
     }
 
 }

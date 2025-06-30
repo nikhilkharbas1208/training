@@ -1,0 +1,25 @@
+{
+    "header" : "hello everyone !",
+
+
+    "Create Issue": "Create Issue",
+    "Project Key":"Project Key",
+    "Issue Type":"Issue Type",
+    "Summary":"Summary",
+    "Description":"Description",
+    "Create Task":"Create Task",
+
+    "Update Issue":"Update Issue",
+    "Issue Key":"Issue Key",
+    "Update Task":"Update Task",
+
+    "id":"id",
+    "key":"key",
+    "Parent":"Parent",
+    "Type":"Type",
+    "Status":"Status",
+    "Reporter":"Reporter",
+    "DeleteIssue":"DeleteIssue",
+    "UpdateIssue":"UpdateIssue"
+
+}

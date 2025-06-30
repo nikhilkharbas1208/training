@@ -1,0 +1,49 @@
+.wrapper {
+  max-width: 600px;
+  margin: 70px auto;
+  padding: 25px;
+  background: #a6d7eb;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(117, 187, 235, 0.05);
+  text-align: left;
+}
+
+.title {
+  margin-bottom: 25px;
+  font-size: 25px;
+  color: #333;
+  text-align: center;
+}
+
+.field {
+  /* margin: 0.5rem 0; */
+  margin-left: 20%;
+  font-size: 15px;
+  color: #555;
+  text-align: left;
+}
+
+.label {
+  font-weight: bold;
+  color: #f00303;
+  margin-left: 5%;
+}
+.data{
+   margin-left: 5%;
+   width: 60%;
+   height:30px;
+   border-radius: 5px;
+   border: none;
+
+}
+.click{
+width: 100px;
+height:25px;
+background-color:rgb(13, 164, 190);
+padding: 2px 10px ;
+font-size: 15px;
+border: none;
+border-radius: 5px;
+margin-left: 40%;
+}

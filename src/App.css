@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,13 @@
   to {
     transform: rotate(360deg);
   }
+} */
+/* style.css.custom-colors  */
+.ag-theme-quartz{
+  --ag-background-color: #88b8e2;
+  --ag-foreground-color: #e01373;
+  --ag-header-background-color: #ec1616;
+  --ag-header-foreground-color: #682121;
+  --ag-odd-row-background-color: rgba(180, 180, 230, 0.2);
+  --ag-font-size: 20px;
 }

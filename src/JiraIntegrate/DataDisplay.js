@@ -4,57 +4,49 @@ import { AgGridReact } from 'ag-grid-react'
 import JiraLogin from './JiraLogin';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Button } from '../StyleComponents/button.style';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { useTranslation } from 'react-i18next';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
   
 const DisplayData = () => {
-   const [result, setResult] = useState(null);
-   const username = process.env.REACT_APP_USERNAME
-   const apiToken =process.env.REACT_APP_API_TOKEN
-   const auth = btoa(`${username}:${apiToken}`);
+    const{t,i18n} = useTranslation("global")
+    
+    const changeLang = (lang)=>{
+      i18n.changeLanguage(lang)
+    }
+    
 
- const navigate = useNavigate()
+   const navigate = useNavigate()
    const CreateIssueHandler=()=>{
       navigate ('/createissue')
    }
   
-
-   const [id,setId]=useState("")
-   
-  return (
+   return (
     <div>
-        <h6>DisplayData</h6>
-        <button onClick={CreateIssueHandler} style={{
-                              padding: '10px 20px',
-                              fontSize: '17px',
-                              border: 'none',
-                              borderRadius: '4px',
-                              marginRight: '18px',
-                              backgroundColor: '#007BFF',
-                              color: '#fff'
-                        }}  >CreateIssue</button>
+        <button onClick={()=>changeLang("en")} className='m-2'>en</button>
+        <button onClick={()=>changeLang("tl")}  className='m-2'>tl</button>
+         <br/><br/>
+        <Button onClick={CreateIssueHandler} bgColor="rgb(136, 148, 253)"  >{t("Create Issue")}</Button>
         <br/><br/>
-
-
         <JiraLogin   render = {
-            (rowData,colDefs,columnStyle)=>(
+            (rowData,colDefs,columnStyle,loading)=>( loading ?  <Skeleton height={400} width={10000} style={{ position: 'absolute', top: 120, left: 0 }} /> :
                 <div   className="ag-theme-quartz" style={{ height: 500 }}>
                             <AgGridReact rowData={rowData} 
                                  columnDefs={colDefs}
                                  rowSelection={{ type: 'multiRow' }}
                                  pagination={true}
-                                 paginationPageSize={5}
-                                 paginationPageSizeSelector={[3,5,10]}
+                                 paginationPageSize={8}
+                                 paginationPageSizeSelector={[8,16]}
                                  defaultColDef={columnStyle}
+                                 
                             />
-                
-                        </div>
-  )
-        }
-        
-        /><Outlet/>
-    </div>
+                        </div>) }
+                /><Outlet/>
+                </div>
   )
 }
 

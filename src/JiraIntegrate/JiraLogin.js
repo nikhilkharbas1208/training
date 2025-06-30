@@ -1,16 +1,24 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { jiraContext } from '..';
+import { Button } from '../StyleComponents/button.style';
+import { useTranslation } from 'react-i18next';
 
 const JiraLogin = ({render}) => {
   const [issues, setIssues] = useState([]);
   const [error, setError] = useState(null);
   const [Result,setResult] = useState('');
-  const username = process.env.REACT_APP_USERNAME
-  const apiToken =process.env.REACT_APP_API_TOKEN
-  const auth = btoa(`${username}:${apiToken}`);
+  const {userData} = useContext(jiraContext)
+  const auth=userData.auth     
   const navigate = useNavigate()
   let rowData;
-  
+  const[loading,setLoading]=useState(true)
+  const{t,i18n} = useTranslation("global")
+
+  const changeLang = (lang)=>{
+    i18n.changeLanguage(lang)
+  }
+
 // '/issuedetails'
      const CellData =  (p) => (
       <Link to={`/issuedetails/${p.data.id}`}>
@@ -32,55 +40,36 @@ const JiraLogin = ({render}) => {
    }
      const DeleteData = (p)=>{
       //  console.log(p.data.id);
-       return ( <button onClick={()=>DeleteIssueHandler(p.data.id)} style={{
-                              padding: '2px 10px',
-                              fontSize: '17px',
-                              border: 'none',
-                              borderRadius: '4px',
-                              backgroundColor: '#DC3545',
-                              color: '#fff'
-                          }}>DeleteIssue</button>)
+       return ( <Button onClick={()=>DeleteIssueHandler(p.data.id)} bgColor="rgb(233, 81, 81)">{t("DeleteIssue")}</Button>)
      }
      const UpdateIssueHandler =(id)=>{
       navigate (`/updateissue/${id}`)
     }
 
      const UpdateData =(p)=>{
-      return ( <button onClick={()=>UpdateIssueHandler(p.data.id)} style={{
-                              padding: '2px 10px',
-                              fontSize: '17px',
-                              border: 'none',
-                              borderRadius: '4px',
-                              marginRight: '18px',
-                              backgroundColor: '	#008000',
-                              color: '#fff'
-                        }}  >UpdateIssue</button>)
+      return ( <Button onClick={()=>UpdateIssueHandler(p.data.id)} bgColor="rgb(95, 211, 139)" >{t("Update Issue")}</Button>)
       
      }
     const [ colDefs,setColDefs ] = useState([
         
-        // {  field:"fields.customfield_10020.name",
-        //     valueFormatter: p =>p.value.toUpperCase(),
-        //     //  cellRenderer :CellData,
-        // },
-        {  field:"id"},
-        {  field:"key",
+        {  field:`${t("id")}`},
+        {  field:`${t("key")}`,
            cellRenderer :CellData,
         },
         {  field:"fields.parent.key",
-           headerName:"Parent",
+           headerName:`${t("Parent")}`,
         },
         {  field:"fields.issuetype.name",
-           headerName:"Type"
+           headerName:`${t("Type")}`,
         },
         {  field:"fields.summary",
-            headerName:"Summary"
+            headerName:`${t("Summary")}`,
         },
         {  field:"fields.status.name",
-           headerName:"Status"
+           headerName:`${t("Status")}`,
         },
         {  field:"fields.reporter.displayName",
-            headerName:"Reporter"
+            headerName:`${t("Reporter")}`,
         },
         { 
           field :"self",
@@ -101,7 +90,7 @@ const JiraLogin = ({render}) => {
             flex:5,
             editable:true,
             filter:true,
-            floatingFilter:true,
+            // floatingFilter:true,
         }
     })
 useEffect(() => {
@@ -122,6 +111,7 @@ useEffect(() => {
         const data = await response.json();
         console.log(data)
         setIssues(data.issues);
+        setLoading(false)
       } catch (err) {
         console.log(err.message)
         setError(err.message);
@@ -135,7 +125,7 @@ useEffect(() => {
   rowData = issues;
  
 
-         return render(rowData,colDefs,columnStyle)
+         return render(rowData,colDefs,columnStyle,loading)
 }
 
 
