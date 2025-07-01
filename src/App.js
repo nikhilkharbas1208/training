@@ -1,7 +1,6 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, createContext, lazy } from 'react';
 import { Provider } from 'react-redux';
-import { Store } from './store/Store';
-import JiraTable from './components/JiraTable';
+import { Store } from './store/store';
 import { JiraIssuesProvider } from './context/JiraIssuesContext';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -12,6 +11,7 @@ import './i18n';
 
 
 const JiraTableTest = lazy(() => import('./components/JiraTableTest'));
+const JiraTable = lazy(() => import('./components/JiraTable'));
 const IssueDetailsPage = lazy(() => import('./components/IssueDetailsPage'));
 const CreateIssuePage = lazy(() => import('./components/CreateIssuePage'));
 // const ErrorBoundary = ({ children }) => {
@@ -21,6 +21,7 @@ const CreateIssuePage = lazy(() => import('./components/CreateIssuePage'));
 //     </Suspense>
 //   );
 // };
+export const JiraIssueContext = createContext();
 
 function App() {
   return (
@@ -30,16 +31,18 @@ function App() {
     </Provider> */}
      <ErrorBoundary FallbackComponent={ErrorFallback}>
       <BrowserRouter>
-      <JiraIssuesProvider projectKey="PRAC">
+        <JiraIssuesProvider projectKey="PRAC">
+        <JiraIssueContext.Provider value={{ projectKey: "PRAC" }}>
         <Suspense fallback={<div><Skeleton height={30} width={200} style={{ marginBottom: 10 }} />
         <Skeleton height={20} count={5} style={{ marginBottom: 6 }} /></div>}>
          <Routes>
-          <Route path="/" element={<JiraTableTest />} />
+          <Route path="/" element={<JiraTable />} />
           <Route path="/issue/:issueId" element={<IssueDetailsPage />} />
           <Route path="/create" element={<CreateIssuePage />} />
         </Routes>
         </Suspense>
-      </JiraIssuesProvider>
+        </JiraIssueContext.Provider>
+         </JiraIssuesProvider>  
       </BrowserRouter>
     </ErrorBoundary>
     </div>

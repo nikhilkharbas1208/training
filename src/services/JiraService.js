@@ -11,11 +11,13 @@ import jiraAxios from "../API/JiraAxios";
 
 const auth = btoa(`${JIRA_EMAIL}:${JIRA_API_TOKEN}`);
 
+
 export const fetchIssues = async (projectKey) => {
   try {
     const response = await jiraAxios.get(
       `/search?jql=project=${projectKey}`
     );
+
     return response.data;
   } catch (error) {
     console.error("Error fetching issues:", error);
@@ -26,6 +28,7 @@ export const fetchIssues = async (projectKey) => {
 export const fetchIssueById = async (issueId) => {
   try {
     const response = await jiraAxios.get(`issue/${issueId}`);
+    console.log("fetchIssueById from services",response)
     return response.data;
   } catch (error) {
     console.error("Failed to fetch issue:", error);

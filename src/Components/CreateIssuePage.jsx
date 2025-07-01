@@ -1,10 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './common/CreateIssueForm.module.css';
 import { JiraIssuesContext } from '../context/JiraIssuesContext';
 import LoaderComponent from './common/LoaderComponent';
 import { createIssue } from '../services/JiraService';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { loadIssues } from '../features/jiraIssueSlice';
 
 const CreateIssuePage = () => {
   const [summary, setSummary] = useState('');
@@ -13,6 +15,8 @@ const CreateIssuePage = () => {
   const [issueType, setIssueType] = useState('Task');
   const [priority, setPriority] = useState('Medium');
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const {projectKey}=useContext(JiraIssuesContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { refreshIssues } = useContext(JiraIssuesContext);

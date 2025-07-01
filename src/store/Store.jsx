@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import issuesReducer from '../features/jiraIssueSlice';
-export const Store = configureStore({
+export const store = configureStore({
   reducer: {
     issues: issuesReducer,
   },

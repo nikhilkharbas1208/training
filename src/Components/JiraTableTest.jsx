@@ -26,7 +26,7 @@ const JiraTableTest = () => {
   // const { issues, loading, error } = useContext(JiraIssuesContext);
   const [editMode, setEditMode] = useState(false);
   const [editedRows, setEditedRows] = useState({});
-  const { issues, loading, error, refreshIssues } = useContext(JiraIssuesContext);
+  const { issues, loading, error, refreshIssues, getIssueById } = useContext(JiraIssuesContext);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const { t } = useTranslation();
