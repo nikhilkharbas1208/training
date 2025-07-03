@@ -115,10 +115,10 @@ export const updateIssues = async (editedRows) => {
         `/issue/${id}`,
         {
           fields: {
-            summary: row.fields.summary,
-            customfield_10068: row.fields.customfield_10068,
-            priority: { name: row.fields.priority.name },
-            issuetype: { name: row.fields.issuetype.name },
+            summary: row.summary,
+            customfield_10068: row.title,
+            priority: { name: row.priority },
+            issuetype: { name: row.type },
           }
         },
         // {

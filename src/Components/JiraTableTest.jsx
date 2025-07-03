@@ -43,6 +43,47 @@ const JiraTableTest = () => {
     return `${rowClass} ${styles.hoverRow}`;
   };
 
+
+
+  const handleCancel = () => {
+    setEditMode(false);
+    setEditedRows({});
+    refreshIssues();
+  };
+
+  const handleDeleteClick = async (issueId) => {
+    const confirm = window.confirm("Are you sure you want to Delete the issue?");
+    if (!confirm) return;
+
+    setIsDeleting(true);
+    await deleteIssue(issueId);
+    setIsDeleting(false);
+    refreshIssues();
+  };
+
+  const handleEdit = () => {
+    setEditMode(true);
+  };
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      await updateIssues(editedRows);
+
+      alert("All updates saved!");
+      setEditedRows({});
+      setEditMode(false);
+      refreshIssues();
+    } catch (err) {
+      console.error("Update failed:", err);
+      console.log(error.config);
+      alert("Some updates failed.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+
   const columnDefs = [
     {
       headerName: t('ticketid'), editable: false, field: 'id',
@@ -92,48 +133,6 @@ const JiraTableTest = () => {
 
   ];
 
-  const handleEdit = () => {
-    setEditMode(true);
-  };
-
-
-  const handleCancel = () => {
-    setEditMode(false);
-    setEditedRows({});
-    refreshIssues();
-  };
-
-
-
-  const handleSave = async () => {
-    setIsSaving(true);
-    try {
-      await updateIssues(editedRows);
-
-      alert("All updates saved!");
-      setEditedRows({});
-      setEditMode(false);
-      refreshIssues();
-    } catch (err) {
-      console.error("Update failed:", err);
-      console.log(error.config);
-      alert("Some updates failed.");
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleDeleteClick = async (issueId) => {
-    const confirm = window.confirm("Are you sure you want to Delete the issue?");
-    if (!confirm) return;
-
-    setIsDeleting(true);
-    await deleteIssue(issueId);
-    setIsDeleting(false);
-    refreshIssues();
-  };
-
-
 
   //   if (Math.random() > 0.5) {
   //   throw new Error("Test Error Boundary");
@@ -141,7 +140,7 @@ const JiraTableTest = () => {
 
   return (
     <div className={styles.pageWrapper} style={{ position: 'relative' }}>
-      <LanguageSelector/>
+      <LanguageSelector />
       <div className={styles.headerSection}>
         {loading ? (
           <Skeleton height={32} width={200} style={{ marginBottom: '20px' }} />

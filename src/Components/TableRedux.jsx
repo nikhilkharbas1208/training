@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteIssuefromStore, loadIssues } from '../features/jiraIssueSlice';
+import { deleteIssuefromStore, loadIssues, updateIssuesInStore } from '../features/jiraIssueSlice';
 import {
  AllCommunityModule
 } from 'ag-grid-community';
@@ -25,12 +25,13 @@ ModuleRegistry.registerModules([
  AllCommunityModule
 ]);
 
-const JiraTable = () => {
+const TableRedux = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   const { items, loading, error } = useSelector((state) => state.issues);
+  console.log("Items in store:",items);
   const [editMode, setEditMode] = useState(false);
   const [editedRows, setEditedRows] = useState({});
   const [isDeleting, setIsDeleting] = useState(false);
@@ -82,11 +83,14 @@ const JiraTable = () => {
   const handleSave = async () => {
     setIsSaving(true);
     try {
+      
+      console.log("editedRows",editedRows);
       await updateIssues(editedRows);
+      const updatedIssuesArray = Object.values(editedRows);
+      dispatch(updateIssuesInStore(updatedIssuesArray));
       alert('All updates saved!');
       setEditedRows({});
       setEditMode(false);
-      dispatch(loadIssues(projectKey));
     } catch (err) {
       console.error('Update failed:', err);
       alert('Some updates failed.');
@@ -109,7 +113,7 @@ const JiraTable = () => {
     },
     {
       headerName: t('type'),
-      field: 'fields.issuetype.name',
+      field: 'type',
       editable: editMode,
       cellEditor: 'agSelectCellEditor',
       cellEditorParams: {
@@ -118,29 +122,29 @@ const JiraTable = () => {
     },
     {
       headerName: t('title'),
-      field: 'fields.customfield_10068',
+      field: 'title',
       editable: editMode,
     },
     {
       headerName: t('summary'),
-      field: 'fields.summary',
+      field: 'summary',
       editable: editMode,
     },
     {
       headerName: t('status'),
-      field: 'fields.status.name',
+      field: 'status',
     },
     {
       headerName: t('assignee'),
-      field: 'fields.assignee.displayName',
+      field: 'assignee',
     },
     {
       headerName: t('created'),
-      field: 'fields.created',
+      field: 'created',
     },
     {
       headerName: t('priority'),
-      field: 'fields.priority.name',
+      field: 'priority',
       editable: editMode,
       cellEditor: 'agSelectCellEditor',
       cellEditorParams: {
@@ -242,4 +246,4 @@ const JiraTable = () => {
   );
 };
 
-export default JiraTable;
+export default TableRedux;

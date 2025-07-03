@@ -19,7 +19,10 @@ describe('Issue Details Page', () => {
     }).as('getIssue');
     cy.visit('http://localhost:3000/issue/10068');
     cy.wait('@getIssue');
-    cy.contains('Test Summary').should('exist');
+    cy.contains('Task').should('exist');
+cy.contains('In Progress').should('exist');
+cy.contains('Alice Smith').should('exist');
+cy.contains('Medium').should('exist');
     cy.contains('Back').click(); 
   });
 });

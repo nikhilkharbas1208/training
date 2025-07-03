@@ -8,6 +8,7 @@ import ErrorFallback from './components/ErrorBoundry';
 import Skeleton from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
 import './i18n'; 
+import TableRedux from './components/TableRedux';
 
 
 const JiraTableTest = lazy(() => import('./components/JiraTableTest'));
@@ -36,7 +37,7 @@ function App() {
         <Suspense fallback={<div><Skeleton height={30} width={200} style={{ marginBottom: 10 }} />
         <Skeleton height={20} count={5} style={{ marginBottom: 6 }} /></div>}>
          <Routes>
-          <Route path="/" element={<JiraTable />} />
+          <Route path="/" element={<TableRedux />} />
           <Route path="/issue/:issueId" element={<IssueDetailsPage />} />
           <Route path="/create" element={<CreateIssuePage />} />
         </Routes>

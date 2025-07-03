@@ -60,12 +60,20 @@ const JiraIssueDetails = ({ theme }) => {
         ) : (
           <div className={styles.card}>
             <h2 className={styles.title}>{t('issue')}: {issue.key}</h2>
-            <p className={styles.field}><span className={styles.label}>{t('summary')}:</span> <span className={styles.value}>{issue.fields.summary}</span></p>
+            <p className={styles.field}><span className={styles.label}>{t('summary')}:</span> <span className={styles.value}> {issue?.fields?.summary || 'N/A'}</span></p>
             <p className={styles.field}><span className={styles.label}>{t('type')}:</span> <span className={styles.value}>{issue.fields.issuetype.name}</span></p>
             <p className={styles.field}><span className={styles.label}>{t('status')}:</span> <span className={styles.value}>{issue.fields.status.name}</span></p>
             <p className={styles.field}><span className={styles.label}>{t('assignee')}:</span> <span className={styles.value}>{issue.fields.assignee?.displayName || "Unassigned"}</span></p>
             <p className={styles.field}><span className={styles.label}>{t('priority')}:</span> <span className={styles.value}>{issue.fields.priority.name}</span></p>
             <p className={styles.field}><span className={styles.label}>{t('description')}:</span><br /><span className={styles.value}>{issue.fields.description.content?.[0]?.content?.[0]?.text || 'No description'}</span></p>
+            
+             {/* <p className={styles.field}><span className={styles.label}>{t('summary')}:</span> <span className={styles.value}> {issue.summary || 'N/A'}</span></p>
+            <p className={styles.field}><span className={styles.label}>{t('type')}:</span> <span className={styles.value}>{issue.type}</span></p>
+            <p className={styles.field}><span className={styles.label}>{t('status')}:</span> <span className={styles.value}>{issue.status}</span></p>
+            <p className={styles.field}><span className={styles.label}>{t('assignee')}:</span> <span className={styles.value}>{issue.assignee || "Unassigned"}</span></p>
+            <p className={styles.field}><span className={styles.label}>{t('priority')}:</span> <span className={styles.value}>{issue.priority}</span></p>
+            <p className={styles.field}><span className={styles.label}>{t('description')}:</span><br /><span className={styles.value}>{issue.description || 'No description'}</span></p> */}
+            
             <button className={styles.backButton} onClick={() => navigate(-1)}>{t('back')}</button>
           </div>
         )
