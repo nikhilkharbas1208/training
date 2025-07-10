@@ -16,8 +16,11 @@ const ButtonStyled = styled.button`
   }
 
   &:disabled {
-    background-color: #555;
+    background-color: #a2b2c7;
     cursor: not-allowed;
+  }
+  &:active {
+    transform: scale(0.96);
   }
 
   margin-right: 10px;

@@ -28,7 +28,7 @@ export const fetchIssues = async (projectKey) => {
 export const fetchIssueById = async (issueId) => {
   try {
     const response = await jiraAxios.get(`issue/${issueId}`);
-    console.log("fetchIssueById from services",response)
+    console.log("fetchIssueById from services", response)
     return response.data;
   } catch (error) {
     console.error("Failed to fetch issue:", error);
@@ -87,21 +87,13 @@ export const deleteIssue = async (issueId) => {
     alert("Failed to delete issue");
     return false;
   }
-  //   try {
-  //     // const proxy = "https://cors-anywhere.herokuapp.com/";
-  //     const proxy = "http://localhost:8080/";
-  //     const response = await axios.delete(`${proxy}${JIRA_BASE_URL}/issue/${issueId}`, {
-  //   headers: {
-  //     Authorization: `Basic ${btoa(`${JIRA_EMAIL}:${JIRA_API_TOKEN}`)}`,
-  //     Accept: "application/json",
-  //   },
-  // });
-  //     return response.status === 204;
-  //   } catch (err) {
-  //     console.error("Failed to delete issue:", err);
-  //     alert("Failed to delete issue");
-  //     return false;
-  //   }
+};
+
+const getTransitionId = async (issueId, targetStatus) => {
+  const res = await jiraAxios.get(`/issue/${issueId}/transitions`);
+  const transitions = res.data.transitions;
+  const transition = transitions.find(t => t.to.name === targetStatus);
+  return transition?.id || null;
 };
 
 export const updateIssues = async (editedRows) => {
@@ -121,14 +113,26 @@ export const updateIssues = async (editedRows) => {
             issuetype: { name: row.type },
           }
         },
-        // {
-        //   headers: {
-        //     Authorization: `Basic ${btoa(`${JIRA_EMAIL}:${JIRA_API_TOKEN}`)}`,
-        //     Accept: "application/json",
-        //     "Content-Type": "application/json",
-        //   },
-        // }
       );
+      if (row.status) {
+        console.log(row.status);
+        const transitionId = await getTransitionId(id, row.status);
+        console.log(transitionId);
+
+        if (transitionId) {
+          const transitionBody = {
+            transition: { id: transitionId }
+          }
+
+          await axios.post(`/rest/api/3/issue/${id}/transitions`, transitionBody, {
+            headers: {
+              Authorization: `Basic ${auth}`,
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+          });
+        }
+      }
     }
     return true;
   } catch (err) {

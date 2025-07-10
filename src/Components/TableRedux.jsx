@@ -3,26 +3,27 @@ import { AgGridReact } from 'ag-grid-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteIssuefromStore, loadIssues, updateIssuesInStore } from '../features/jiraIssueSlice';
 import {
- AllCommunityModule
+  AllCommunityModule
 } from 'ag-grid-community';
 import { ModuleRegistry } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import ButtonStyled from './common/ButtonStyled';
 import styles from './common/JiraTableTest.module.css';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { FaTrash } from 'react-icons/fa';
 import LoaderComponent from './common/LoaderComponent';
 import { deleteIssue, updateIssues } from '../services/JiraService';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from './LanguageSelector';
 import { JiraIssueContext } from '../App';
+import { getJiraColumnDefs } from './getJiraColumns';
+import { FiRefreshCw } from 'react-icons/fi';
+import WithTheme from './WithTheme';
 
 ModuleRegistry.registerModules([
- AllCommunityModule
+  AllCommunityModule
 ]);
 
 const TableRedux = () => {
@@ -30,16 +31,14 @@ const TableRedux = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const { items, loading, error } = useSelector((state) => state.issues);
-  console.log("Items in store:",items);
+  const { items, loading } = useSelector((state) => state.issues);
+  console.log("Items in store:", items);
   const [editMode, setEditMode] = useState(false);
   const [editedRows, setEditedRows] = useState({});
   const [isDeleting, setIsDeleting] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const {projectKey}=useContext(JiraIssueContext);
+  const { projectKey } = useContext(JiraIssueContext);
 
-  const priorityOptions = ['Highest', 'High', 'Medium', 'Low', 'Lowest'];
-  const issueTypeOptions = ['Bug', 'Task'];
 
   useEffect(() => {
     if (projectKey) {
@@ -47,7 +46,7 @@ const TableRedux = () => {
     }
   }, [projectKey]);
 
-  const getRowClass = (params) => { 
+  const getRowClass = (params) => {
     const rowClass = params.node.rowIndex % 2 === 0
       ? styles.alternateRow1
       : styles.alternateRow2;
@@ -61,8 +60,8 @@ const TableRedux = () => {
     setIsDeleting(true);
     try {
       await deleteIssue(issueId);
-      dispatch(deleteIssuefromStore(issueId));
-      // dispatch(loadIssues(projectKey));
+      //dispatch(deleteIssuefromStore(issueId));
+      dispatch(loadIssues(projectKey));
     } catch (err) {
       console.error('Delete failed:', err);
     } finally {
@@ -83,11 +82,12 @@ const TableRedux = () => {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      
-      console.log("editedRows",editedRows);
+
+      console.log("editedRows", editedRows);
       await updateIssues(editedRows);
-      const updatedIssuesArray = Object.values(editedRows);
-      dispatch(updateIssuesInStore(updatedIssuesArray));
+      // const updatedIssuesArray = Object.values(editedRows);
+      // dispatch(updateIssuesInStore(updatedIssuesArray));
+      dispatch(loadIssues(projectKey));
       alert('All updates saved!');
       setEditedRows({});
       setEditMode(false);
@@ -99,78 +99,18 @@ const TableRedux = () => {
     }
   };
 
+  const columnDefs = getJiraColumnDefs({  t,  editMode, handleDeleteClick,});
 
-  const columnDefs = [
-    {
-      headerName: t('ticketid'),
-      field: 'id',
-      editable: false,
-      cellRenderer: (params) => (
-        <NavLink to={`/issue/${params.data.id}`} className={styles.linkCell}>
-          {params.value}
-        </NavLink>
-      ),
-    },
-    {
-      headerName: t('type'),
-      field: 'type',
-      editable: editMode,
-      cellEditor: 'agSelectCellEditor',
-      cellEditorParams: {
-        values: issueTypeOptions,
-      },
-    },
-    {
-      headerName: t('title'),
-      field: 'title',
-      editable: editMode,
-    },
-    {
-      headerName: t('summary'),
-      field: 'summary',
-      editable: editMode,
-    },
-    {
-      headerName: t('status'),
-      field: 'status',
-    },
-    {
-      headerName: t('assignee'),
-      field: 'assignee',
-    },
-    {
-      headerName: t('created'),
-      field: 'created',
-    },
-    {
-      headerName: t('priority'),
-      field: 'priority',
-      editable: editMode,
-      cellEditor: 'agSelectCellEditor',
-      cellEditorParams: {
-        values: priorityOptions,
-      },
-    },
-    {
-      headerName: t('delete'),
-      field: 'id',
-      filter: false,
-      sortable: false,
-      cellRenderer: (params) => (
-        <FaTrash
-          onClick={() => handleDeleteClick(params.data.id)}
-          style={{ cursor: 'pointer', fontSize: '12px' }}
-          title="Delete"
-        />
-      ),
-    },
-  ];
+  const mItems = useMemo(() => {
+    return items.map((item) => JSON.parse(JSON.stringify(item)));
+  }, [items]);
 
-  const clonedItems = useMemo(() => {
-  return items.map((item) => JSON.parse(JSON.stringify(item)));
-   }, [items]);
-
+  
+  //   if (Math.random() > 0.5) {
+  //   throw new Error("Test Error Boundary");
+  // }
   return (
+    // css modules 
     <div className={styles.pageWrapper} style={{ position: 'relative' }}>
       <LanguageSelector />
       <div className={styles.headerSection}>
@@ -183,42 +123,32 @@ const TableRedux = () => {
         )}
       </div>
 
+      {/* common loader */}
       {isDeleting && <LoaderComponent message="Deleting issue..." />}
       {isSaving && <LoaderComponent message="Saving changes..." />}
 
+      
       <NavLink to="/create" style={{ marginBottom: '10px', display: 'inline-block' }}>
+       {/* Styled component */}
         <ButtonStyled>{t('create')}</ButtonStyled>
       </NavLink>
       <ButtonStyled onClick={handleEdit} disabled={editMode}>
         {t('edit')}
       </ButtonStyled>
+      <ButtonStyled onClick={() => dispatch(loadIssues(projectKey))} style={{ marginBottom: '10px', display: 'inline-block',  }}>
+        <FiRefreshCw style={{ fontSize: '12px' }} />
+      </ButtonStyled>
+
 
       {loading ? (
         <div style={{ marginTop: '20px' }}>
-          <Skeleton
-            height={40}
-            count={10}
-            style={{ marginBottom: '10px', borderRadius: '6px' }}
-            baseColor="#e0e0e0"
-            highlightColor="#f5f5f5"
-            animation="wave"
-          />
+          {/* show skeleton */}
+          <Skeleton  height={40}  count={10}  style={{ marginBottom: '10px', borderRadius: '6px' }}  baseColor="#e0e0e0"  highlightColor="#f5f5f5"  animation="wave"/>
         </div>
       ) : (
         <div className={`ag-theme-alpine ${styles.customGrid}`} style={{ height: 500 }}>
-          <AgGridReact
-            // rowData={items}
-            rowData={clonedItems}
-            columnDefs={columnDefs}
-            defaultColDef={{
-              filter: true,
-              sortable: true,
-              resizable: true,
-            }}
-            pagination={true}
-            paginationPageSize={10}
-            domLayout="autoHeight"
-            getRowClass={getRowClass}
+          <AgGridReact  rowData={mItems}  columnDefs={columnDefs} defaultColDef={{  filter: true,  sortable: true, resizable: true,}}
+            pagination={true}  paginationPageSize={10}  domLayout="autoHeight"  getRowClass={getRowClass}
             onGridReady={(params) => params.api.sizeColumnsToFit()}
             onCellValueChanged={(params) => {
               const rowId = params.data.id;
@@ -231,11 +161,8 @@ const TableRedux = () => {
         </div>
       )}
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <ButtonStyled
-          onClick={handleSave}
-          disabled={!editMode || Object.keys(editedRows).length === 0}
-        >
+      <div style={{  position: 'fixed', bottom: '20px', right: '20px',  display: 'flex', justifyContent: 'flex-end',}}>
+        <ButtonStyled  onClick={handleSave} disabled={!editMode || Object.keys(editedRows).length === 0}>
           {t('save')}
         </ButtonStyled>
         <ButtonStyled onClick={handleCancel} style={{ marginLeft: '10px' }} disabled={!editMode}>
@@ -246,4 +173,4 @@ const TableRedux = () => {
   );
 };
 
-export default TableRedux;
+export default WithTheme(TableRedux);

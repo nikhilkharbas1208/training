@@ -8,11 +8,11 @@ import ErrorFallback from './components/ErrorBoundry';
 import Skeleton from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
 import './i18n'; 
-import TableRedux from './components/TableRedux';
 
 
 const JiraTableTest = lazy(() => import('./components/JiraTableTest'));
-const JiraTable = lazy(() => import('./components/JiraTable'));
+const TableRedux = lazy(() => import('./components/TableRedux'));
+// const JiraTable = lazy(() => import('./components/JiraTable'));
 const IssueDetailsPage = lazy(() => import('./components/IssueDetailsPage'));
 const CreateIssuePage = lazy(() => import('./components/CreateIssuePage'));
 // const ErrorBoundary = ({ children }) => {

@@ -16,6 +16,7 @@ import LoaderComponent from './common/LoaderComponent';
 import { deleteIssue, updateIssues } from '../services/JiraService';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from './LanguageSelector';
+import { getJiraColumnDefs } from './getJiraColumns';
 
 
 ModuleRegistry.registerModules([
@@ -31,8 +32,6 @@ const JiraTableTest = () => {
   const [isSaving, setIsSaving] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const priorityOptions = ['Highest', 'High', 'Medium', 'Low', 'Lowest'];
-  const issueTypeOptions = ['Bug', 'Task'];
 
 
   console.log(issues);
@@ -84,54 +83,11 @@ const JiraTableTest = () => {
   };
 
 
-  const columnDefs = [
-    {
-      headerName: t('ticketid'), editable: false, field: 'id',
-      cellRenderer: (params) => {
-        return (
-          <NavLink
-            to={`/issue/${params.data.id}`} className={styles.linkCell}
-          >
-            {params.value}
-          </NavLink>
-        );
-      },
-    },
-    {
-      headerName: t('type'), field: 'fields.issuetype.name', editable: editMode, cellEditor: 'agSelectCellEditor',
-      cellEditorParams: {
-        values: issueTypeOptions,
-      },
-    },
-    { headerName: t('title'), field: 'fields.customfield_10068', editable: editMode },
-    { headerName: t('summary'), field: 'fields.summary', editable: editMode },
-    { headerName: t('status'), field: 'fields.status.name' },
-    { headerName: t('assignee'), field: 'fields.assignee.displayName' },
-    { headerName: t('created'), field: 'fields.created', },
-    {
-      headerName: t('priority'), field: 'fields.priority.name', editable: editMode, cellEditor: 'agSelectCellEditor',
-      cellEditorParams: {
-        values: priorityOptions,
-      },
-    },
-    {
-      headerName: t("delete"),
-      field: "id",
-      filter: false,
-      sortable: false,
-      cellRenderer: (params) => {
-        return (
-
-          <FaTrash
-            onClick={() => handleDeleteClick(params.data.id)}
-            style={{ cursor: "pointer", fontSize: "12px" }}
-            title="Delete"
-          />
-        );
-      },
-    }
-
-  ];
+  const columnDefs = getJiraColumnDefs({
+  t,
+  editMode,
+  handleDeleteClick,
+});
 
 
   //   if (Math.random() > 0.5) {

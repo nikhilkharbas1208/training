@@ -36,10 +36,10 @@ export const JiraIssuesProvider = ({ projectKey, children }) => {
   const getIssueById = async (issueId) => {
   setloading(true);
   try {
-    // Try to find issue in the current issues state first
+    
     const existingIssue = issues.find((issue) => issue.id === issueId);
     if (existingIssue) {
-      console.log( existingIssue);
+      // console.log( existingIssue);
       return existingIssue;
     }
   } catch (err) {

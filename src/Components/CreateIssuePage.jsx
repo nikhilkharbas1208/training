@@ -62,16 +62,10 @@ const CreateIssuePage = () => {
 
       // dispatch(addIssue(newIssue));
       // navigate('/');
-      const formData = {
-        summary,
-        customTitle,
-        description,
-        issueType,
-        priority,
-      };
-      const result = await dispatch(addIssue(formData)).unwrap(); // wait for the thunk to resolve
-      console.log("New issue created:", result);
-      // await createIssue(formData);
+      const formData = {summary, customTitle, description, issueType, priority,};
+      // const result = await dispatch(addIssue(formData));
+      // console.log("New issue created:", result);
+       await createIssue(formData);
       // refreshIssues();
       navigate('/');
     } catch (error) {
@@ -89,37 +83,19 @@ const CreateIssuePage = () => {
         {loading && <LoaderComponent message="Creating issue..." />}
         <form onSubmit={handleSubmit}>
           <label className={styles.label}>{t('title')}</label>
-          <input
-            className={styles.input}
-            value={customTitle}
-            onChange={(e) => setCustomTitle(e.target.value)}
-            required
-          />
+          <input  className={styles.input} aria-label="title"  value={customTitle}  onChange={(e) => setCustomTitle(e.target.value)} required />
 
           <label className={styles.label}>{t('issue')}{t('type')}</label>
-          <select
-            className={styles.input}
-            value={issueType}
-            onChange={(e) => setIssueType(e.target.value)}
-          >
+          <select  className={styles.input}  value={issueType}  onChange={(e) => setIssueType(e.target.value)} aria-label="IssueType">
             <option>Task</option>
             <option>Bug</option>
           </select>
 
           <label className={styles.label}>{t('summary')}</label>
-          <input
-            className={styles.input}
-            value={summary}
-            onChange={(e) => setSummary(e.target.value)}
-            required
-          />
+          <input  className={styles.input}  value={summary}  onChange={(e) => setSummary(e.target.value)}  required aria-label="summary"/>
 
           <label className={styles.label}>{t('priority')}</label>
-          <select
-            className={styles.input}
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-          >
+          <select  className={styles.input}  value={priority} aria-label="priority"  onChange={(e) => setPriority(e.target.value) }>
             <option>Highest</option>
             <option>High</option>
             <option>Medium</option>
@@ -128,21 +104,13 @@ const CreateIssuePage = () => {
           </select>
 
           <label className={styles.label}>{t('description')}</label>
-          <textarea
-            className={styles.textarea}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+          <textarea  className={styles.textarea}  value={description} aria-label="description"  onChange={(e) => setDescription(e.target.value)}  />
 
           <div className={styles.actions}>
             <button className={styles.button} type="submit" disabled={loading}>
               {t('create')}
             </button>
-            <button
-              className={styles.cancel}
-              type="button"
-              onClick={() => navigate('/')}
-            >
+            <button  className={styles.cancel}  type="button"  onClick={() => navigate('/')}>
               {t('cancel')}
             </button>
           </div>
