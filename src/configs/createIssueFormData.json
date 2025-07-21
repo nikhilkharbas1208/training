@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "required": ["customTitle", "summary", "priority", "issueType"],
+  "properties": {
+    "customTitle": {
+      "type": "string",
+      "title": "Title"
+    },
+    "issueType": {
+      "type": "string",
+      "title": "Issue Type",
+      "enum": ["Task", "Bug"]
+    },
+    "summary": {
+      "type": "string",
+      "title": "Summary"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Priority",
+      "enum": ["Highest", "High", "Medium", "Low", "Lowest"]
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    }
+  }
+}

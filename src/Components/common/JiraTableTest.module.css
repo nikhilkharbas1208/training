@@ -1,11 +1,17 @@
+body {
+  margin: 0;
+  background-color: #f5f8fc;
+}
 .headerSection {
   margin-bottom: 16px;
+  justify-content: space-between;
+
 }
 
 .title {
   font-size: 30px;
   color: #ffffff;
-  background-color: #398cef;
+  background-color: #007bff;
 }
 
 .buttonSection {
@@ -39,7 +45,7 @@
 }
 
 .customGrid :global(.ag-header) {
-  background-color: #398cef;
+  background-color: #007bff;
 }
 
 .customGrid :global(.ag-header-cell-label) {

@@ -6,7 +6,7 @@ import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import styled from 'styled-components';
-import ButtonStyled from './common/ButtonStyled';
+import ButtonStyled from './common/ButtonStyledComponent';
 import styles from './common/JiraTableTest.module.css';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -15,7 +15,7 @@ import { FaTrash } from 'react-icons/fa';
 import LoaderComponent from './common/LoaderComponent';
 import { deleteIssue, updateIssues } from '../services/JiraService';
 import { useTranslation } from 'react-i18next';
-import LanguageSelector from './LanguageSelector';
+import LanguageSelector from './LanguageSelectorComponent';
 import { getJiraColumnDefs } from './getJiraColumns';
 
 

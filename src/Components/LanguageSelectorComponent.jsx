@@ -19,7 +19,7 @@ const LanguageSelector = () => {
                 right: '60px',
                 padding: '6px 10px',
                 borderRadius: '4px',
-                backgroundColor: '#398cef',
+                backgroundColor: '#007bff',
                 color: '#fff',
                 border: 'none',
                 cursor: 'pointer',

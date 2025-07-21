@@ -42,6 +42,11 @@ const JiraIssueDetails = ({ theme }) => {
 
   // const wrapperClass = `${styles.wrapper} ${theme === 'dark' ? styles.darkCard : styles.lightCard}`;
 
+  const handleOnClick = (id) => {
+    const url=`https://vaishnavishinde425.atlassian.net/jira/software/projects/PRAC/boards/2?selectedIssue=${id}`;
+    window.open(url,'_blank');
+  }
+
   return (
     <div className={styles.wrapper} style={{
     backgroundColor: theme === 'dark' ? '#2e3031' : '#e6f0ff',
@@ -52,7 +57,8 @@ const JiraIssueDetails = ({ theme }) => {
           <IssueDetailsSkeleton/>
         ) : (
           <div className={styles.card}>
-            <h2 className={styles.title}>{t('issue')}: {issue.key}</h2>
+            <h2 className={styles.title}>{t('ticketid')}: {issue.key}</h2>
+            <p className={styles.field}><span className={styles.label}>{t('title')}:</span> <span className={styles.value}> {issue.fields.customfield_10068} </span></p>
             <p className={styles.field}><span className={styles.label}>{t('summary')}:</span> <span className={styles.value}> {issue?.fields?.summary || 'N/A'}</span></p>
             <p className={styles.field}><span className={styles.label}>{t('type')}:</span> <span className={styles.value}>{issue.fields.issuetype.name}</span></p>
             <p className={styles.field}><span className={styles.label}>{t('status')}:</span> <span className={styles.value}>{issue.fields.status.name}</span></p>
@@ -60,6 +66,7 @@ const JiraIssueDetails = ({ theme }) => {
             <p className={styles.field}><span className={styles.label}>{t('priority')}:</span> <span className={styles.value}>{issue.fields.priority.name}</span></p>
             <p className={styles.field}><span className={styles.label}>{t('description')}:</span><br /><span className={styles.value}>{issue.fields.description.content?.[0]?.content?.[0]?.text || 'No description'}</span></p>  
             <button className={styles.backButton} onClick={() => navigate(-1)}>{t('back')}</button>
+            <button className={styles.backButton} onClick={() => handleOnClick(issue.id)} style={{ marginLeft: '12px' }}>Go to the website</button>
           </div>
         )
       )} />

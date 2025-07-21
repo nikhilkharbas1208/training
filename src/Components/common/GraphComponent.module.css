@@ -1,0 +1,32 @@
+.graphContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #f4f7fa;
+}
+
+
+.graph {
+  width: 100%;
+  max-width: 900px;
+  height: 600px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+.heading {
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.25rem;
+  color: #ffffff;
+  background-color: #007bff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 123, 255, 0.1);
+  text-align: center;
+  max-width: 900px;
+  width: 100%;
+}
+

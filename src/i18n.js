@@ -1,4 +1,3 @@
-
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -29,6 +28,8 @@ i18n
                     cancel: "Cancel",
                     jiraTicket: "Jira Ticket",
                     createNewJiraIssue: "Create New Jira Issue",
+                    graph: "Graph",
+                    dependencyGraph: "Dependency Graph"
                 }
             },
             hi: {
@@ -49,7 +50,9 @@ i18n
                     edit: "संपादित करें",
                     create: "बनाएँ",
                     cancel: "रद्द करें",
-                    jiraTicket: "जीरा टिकट"
+                    jiraTicket: "जीरा टिकट",
+                    graph: "ग्राफ़",
+                    dependencyGraph: "निर्भरता ग्राफ़"
                 }
             },
             mr: {
@@ -71,7 +74,9 @@ i18n
                     edit: "संपादित करा",
                     create: "तयार करा",
                     cancel: "रद्द करा",
-                    jiraTicket: "जीरा तिकीट"
+                    jiraTicket: "जीरा तिकीट",
+                    graph: "आरेख",
+                    dependencyGraph: "अवलंबित्व आरेख"
                 }
             },
             fr: {
@@ -92,17 +97,15 @@ i18n
                     edit: "Modifier",
                     create: "Créer",
                     cancel: "Annuler",
-                    jiraTicket: "Ticket Jira"
+                    jiraTicket: "Ticket Jira",
+                    graph: "Graphe",
+                    dependencyGraph: "Graphe de dépendances"
                 }
             }
 
         },
         lng: 'en',
         fallbackLng: 'en',
-        
     });
 
 export default i18n;
-
-
-

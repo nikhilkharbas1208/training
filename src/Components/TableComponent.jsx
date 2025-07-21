@@ -9,14 +9,14 @@ import { ModuleRegistry } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import ButtonStyled from './common/ButtonStyled';
+import ButtonStyled from './common/ButtonStyledComponent';
 import styles from './common/JiraTableTest.module.css';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import LoaderComponent from './common/LoaderComponent';
 import { deleteIssue, updateIssues } from '../services/JiraService';
 import { useTranslation } from 'react-i18next';
-import LanguageSelector from './LanguageSelector';
+import LanguageSelector from './LanguageSelectorComponent';
 import { JiraIssueContext } from '../App';
 import { getJiraColumnDefs } from './getJiraColumns';
 import { FiRefreshCw } from 'react-icons/fi';
@@ -26,7 +26,7 @@ ModuleRegistry.registerModules([
   AllCommunityModule
 ]);
 
-const TableRedux = () => {
+const TableComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -135,6 +135,10 @@ const TableRedux = () => {
       <ButtonStyled onClick={handleEdit} disabled={editMode}>
         {t('edit')}
       </ButtonStyled>
+      <NavLink to="/graph" style={{ marginBottom: '10px', display: 'inline-block' }}>
+       {/* Styled component */}
+        <ButtonStyled>{t('graph')}</ButtonStyled>
+      </NavLink>
       <ButtonStyled onClick={() => dispatch(loadIssues(projectKey))} style={{ marginBottom: '10px', display: 'inline-block',  }}>
         <FiRefreshCw style={{ fontSize: '12px' }} />
       </ButtonStyled>
@@ -173,4 +177,4 @@ const TableRedux = () => {
   );
 };
 
-export default WithTheme(TableRedux);
+export default WithTheme(TableComponent);

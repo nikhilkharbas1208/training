@@ -22,7 +22,7 @@ const WithTheme = (WrappedComponent) => {
             top: '10px',
             right: '10px',
             padding: '6px 12px',
-            backgroundColor: '#398cef',
+            backgroundColor: '#007bff',
             color: 'white',
             border: 'none',
             borderRadius: '20px',

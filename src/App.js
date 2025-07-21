@@ -8,13 +8,15 @@ import ErrorFallback from './components/ErrorBoundry';
 import Skeleton from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
 import './i18n'; 
+import 'semantic-ui-css/semantic.min.css';
+import GraphComponent from './components/GraphComponent';
 
 
-const JiraTableTest = lazy(() => import('./components/JiraTableTest'));
-const TableRedux = lazy(() => import('./components/TableRedux'));
+const JiraTableTest = lazy(() => import('./components/JiraTableTestComponent'));
+const TableComponent = lazy(() => import('./components/TableComponent'));
 // const JiraTable = lazy(() => import('./components/JiraTable'));
-const IssueDetailsPage = lazy(() => import('./components/IssueDetailsPage'));
-const CreateIssuePage = lazy(() => import('./components/CreateIssuePage'));
+const IssueDetailsPage = lazy(() => import('./components/IssueDetailsComponent'));
+const CreateIssuePage = lazy(() => import('./components/CreateIssuePageComponent'));
 // const ErrorBoundary = ({ children }) => {
 //   return (
 //     <Suspense fallback={<p>Loading...</p>}>
@@ -37,9 +39,10 @@ function App() {
         <Suspense fallback={<div><Skeleton height={30} width={200} style={{ marginBottom: 10 }} />
         <Skeleton height={20} count={5} style={{ marginBottom: 6 }} /></div>}>
          <Routes>
-          <Route path="/" element={<TableRedux />} />
+          <Route path="/" element={<TableComponent />} />
           <Route path="/issue/:issueId" element={<IssueDetailsPage />} />
           <Route path="/create" element={<CreateIssuePage />} />
+          <Route path="/graph" element={<GraphComponent />} />
         </Routes>
         </Suspense>
         </JiraIssueContext.Provider>
