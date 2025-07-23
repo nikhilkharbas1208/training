@@ -1,0 +1,17 @@
+/* App.css or Navbar.module.css */
+
+.container {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  background-color: #90a0fd; 
+  box-shadow: 0 2px 4px rgba(17, 17, 17, 0.1); 
+}
+
+.container h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #221377 /* 2e18aa */;
+}

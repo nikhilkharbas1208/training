@@ -1,12 +1,14 @@
 .wrapper {
-  max-width: 600px;
+  /* max-width: 600px;
   margin: 70px auto;
-  padding: 25px;
+  padding: 25px; */
   background: #a6d7eb;
-  border: 1px solid #ddd;
+  font-Style:'italic';
+  height: 900;
+  /* border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(117, 187, 235, 0.05);
-  text-align: left;
+  text-align: left; */
 }
 
 .title {
@@ -39,7 +41,7 @@
 }
 .click{
 width: 150px;
-height:25px;
+height:30px;
 background-color:rgb(13, 164, 190);
 padding: 2px 10px ;
 font-size: 15px;

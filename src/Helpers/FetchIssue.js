@@ -1,5 +1,7 @@
 import React, { Suspense, useContext, useEffect, useState } from 'react'
-import { jiraContext } from '..';
+
+import axios from 'axios';
+import JiraContext from '../JiraContext';
 
 
 
@@ -10,34 +12,36 @@ const withFetchIssue = (Component,data) => {
     return function FetchIssue1(){
 
     const [projectKey, setProjectKey] = useState('');
+    const [issues,setIssues]=useState(null);
     const [issueType, setIssueType] = useState('');
     const [summary, setSummary] = useState('');
     const [description, setDescription] = useState('');
     const [issueKey,setIssuekey]=useState('');
-    const {userData} = useContext(jiraContext)
+    const {userData} = useContext(JiraContext)
     const auth=userData.auth
     const [loading,setLoading]=useState(true)
     const handleButton = () => {
            
         const fetchIssues = async () => {
              let id = await data();
-            console.log("issue id is",id)
+            // console.log("issue id is",id)
           try {
-            const response = await fetch(`/rest/api/3/issue/${id}`, {
-            headers: {
-              'Authorization': `Basic ${auth}`,
-              'Accept': 'application/json',}
+            const response = await axios.get(`/rest/api/3/issue/${id}`, {
+            // headers: {
+            //   'Authorization': `Basic ${auth}`,
+            //   'Accept': 'application/json',}
                   })
-           if (!response.ok) {
-              throw new Error(`Error: ${response.statusText}`);
-            }
-            const datainfo = await response.json();
-            console.log(datainfo)
-            setProjectKey(datainfo?.fields?.project?.key || '');
-            setIssueType(datainfo?.fields?.issuetype?.name || '');
-            setSummary(datainfo?.fields?.summary  || '');
-            setIssuekey(datainfo?.key || '')
-            setDescription(datainfo?.fields?.description?.content[0]?.content[0]?.text || '');
+          //  if (!response.ok) {
+          //     throw new Error(`Error: ${response.statusText}`);
+          //   }
+            const datainfo = await response;
+            // console.log(datainfo)
+            setIssues(datainfo)
+            setProjectKey(datainfo?.data?.fields?.project?.key || '');
+            setIssueType(datainfo?.data?.fields?.issuetype?.name || '');
+            setSummary(datainfo?.data?.fields?.summary  || '');
+            setIssuekey(datainfo?.data?.key || '')
+            setDescription(datainfo?.data?.fields?.description?.content[0]?.content[0]?.text || '');
             setLoading(false)
           } catch (err) {
             console.log(err.message)
@@ -46,7 +50,7 @@ const withFetchIssue = (Component,data) => {
          fetchIssues();
     }
    useEffect(()=>handleButton(),[])  
-   console.log(projectKey,issueType,summary,description,issueKey)
+  //  console.log(projectKey,issueType,summary,description,issueKey)
    return ( <Component  data={{projectKey,issueType,summary,description,issueKey,loading}}/>)
     }
 

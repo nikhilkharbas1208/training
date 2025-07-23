@@ -1,38 +1,44 @@
 import { use, useContext, useEffect, useState } from 'react';
-import { jiraContext } from '..';
-import styles from '../CSSModules/CreateIssue.module.css'
+import styles from '../Components/CreateIssue.module.css'
 import { useTranslation } from 'react-i18next';
+import JiraContext from '../JiraContext';
+import Form from '@rjsf/core';
+import validator from '@rjsf/validator-ajv8'
+import { jsonSchema, uiJsonSchema } from './CreateIssueSchema';
+
+
 export default function CreateIssue() {
 
   const{t,i18n} = useTranslation("global")
-
   const changeLang = (lang)=>{
     i18n.changeLanguage(lang)
-  }
-
+    }
+  const [formData, setFormData] = useState({});
   const [projectKey, setProjectKey] = useState('');
   const [issueType, setIssueType] = useState('');
   const [summary, setSummary] = useState('');
   const [description, setDescription] = useState('');
   const [result, setResult] = useState(null);  
-  const {userData} = useContext(jiraContext)
+  const {userData} = useContext(JiraContext)
   const auth=userData.auth
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const payload = {
-      fields: {
-        project: { key: projectKey },
-        summary,
-        description: {
-          type: 'doc',
-          version: 1,
-          content: [
-            { type: 'paragraph', content: [{ type: 'text', text: description }] }
-          ]
-        },
-        issuetype: { name: issueType }
-      }
-    };
+
+
+  const handleSubmit = async (formData) => {
+    // e.preventDefault();
+    // const payload = {
+    //   fields: {
+    //     project: { key: projectKey },
+    //     summary,
+    //     description: {
+    //       type: 'doc',
+    //       version: 1,
+    //       content: [
+    //         { type: 'paragraph', content: [{ type: 'text', text: description }] }
+    //       ]
+    //     },
+    //     issuetype: { name: issueType }
+    //   }
+    // };
 
          
           try {
@@ -40,7 +46,7 @@ export default function CreateIssue() {
               method: 'POST',
               headers: {  'Authorization': `Basic ${auth}`,
                   'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
+              body: JSON.stringify(formData)
             });
             setResult(await res.json());
           } catch (err) {
@@ -51,9 +57,7 @@ export default function CreateIssue() {
 
   return (
     <center className={styles.wrapper}>
-      <button onClick={()=>changeLang("en")} className='m-2'>en</button>
-      <button onClick={()=>changeLang("tl")}  className='m-2'>tl</button>
-      <div>
+      {/* <div>
         <form onSubmit={handleSubmit}>
           <h2 className={styles.title}>{t("Create Issue")}</h2>
       <label className={styles.label}>{t("Project Key")}<br/><br/>
@@ -78,6 +82,27 @@ export default function CreateIssue() {
         </div>
       )}
     </form>
+    </div> */}
+    <div style={{ margin: '2rem' }}>
+      <h2>Create Issue</h2>
+      <Form
+        schema={jsonSchema}
+        uiSchema={uiJsonSchema}
+        validator={validator}
+        formData={formData}
+        onChange={({ formData }) => setFormData(formData)}
+        onSubmit={({ formData }, e) => handleSubmit(formData)}//({ formData }) => console.log('Submitted:', formData)
+        onError={errors => console.log('Errors:', errors)}
+      >
+        <button type="submit">Submit</button>
+        {result && (
+        <div style={{color:'#DC3545'}} >
+          {result.key
+            ? `Created issue ${result.key}`
+            : result.errors}
+        </div>
+      )}
+      </Form>
     </div>
     </center>
   );

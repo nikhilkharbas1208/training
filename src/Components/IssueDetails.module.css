@@ -16,7 +16,6 @@
 }
 
 .field {
-  /* margin: 0.5rem 0; */
   margin-left: 20%;
   font-size: 15px;
   color: #555;
@@ -31,12 +30,3 @@
    margin-left: 10%;
 }
 
-
-/* .ag-header-cell-label {
-  height: 100%; 
-}
-
-.ag-header-cell-label .ag-header-cell-text {
-  writing-mode: vertical-lr; 
-  -ms-writing-mode: tb-lr; 
-} */

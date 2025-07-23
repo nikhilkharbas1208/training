@@ -13,13 +13,15 @@
     "Issue Key":"Issue Key",
     "Update Task":"Update Task",
 
-    "id":"id",
-    "key":"key",
+    "Id":"Id",
+    "Key":"Key",
     "Parent":"Parent",
     "Type":"Type",
     "Status":"Status",
     "Reporter":"Reporter",
     "DeleteIssue":"DeleteIssue",
-    "UpdateIssue":"UpdateIssue"
+    "UpdateIssue":"UpdateIssue",
+
+    "Issue Details":"Issue Details"
 
 }

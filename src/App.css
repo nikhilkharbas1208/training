@@ -37,11 +37,55 @@
   }
 } */
 /* style.css.custom-colors  */
-.ag-theme-quartz{
-  --ag-background-color: #88b8e2;
-  --ag-foreground-color: #e01373;
-  --ag-header-background-color: #ec1616;
-  --ag-header-foreground-color: #682121;
-  --ag-odd-row-background-color: rgba(180, 180, 230, 0.2);
-  --ag-font-size: 20px;
+
+
+/* .ag-theme-quartz{
+  --ag-background-color: #e4eef3;
+  --ag-foreground-color: #141313;
+  --ag-header-background-color: #63b0f8;
+  --ag-header-foreground-color: #0f0e0e;
+  --ag-odd-row-background-color: rgba(180, 230, 180, 0.2);
+  --ag-font-size: 15px;
+} */
+
+
+.ag-theme-quartz .ag-header-cell {
+   font-family: 'Brush Script MT', cursive;
+   font-size: 17px;
+   background-color: #bfe1f8;
+   color: #3670bd;
 }
+
+.ag-theme-quartz .ag-header-cell .ag-cell:hover {
+   background-color: #4ca6fa;
+}
+
+
+.ag-theme-quartz .ag-row:nth-child(odd) {
+  background-color: rgba(220, 230, 240, 0.5);
+}
+.ag-theme-quartz .ag-row:nth-child(even) {
+  background-color: rgba(240, 240, 250, 0.6);
+}
+
+
+.ag-theme-quartz .ag-row.ag-row-hover {
+  background-color: rgba(180, 200, 240, 0.8) !important;
+}
+
+
+.ag-theme-quartz .ag-row-selected {
+  background-color: rgba(255, 210, 120, 0.8) !important;
+}
+
+
+.ag-theme-quartz .ag-cell:hover {
+  background-color: rgba(200, 220, 255, 0.7);
+}
+
+
+
+
+
+
+

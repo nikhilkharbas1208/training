@@ -1,11 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import withFetchIssue from './FetchIssue';
-import { jiraContext } from '..';
-import styles from '../CSSModules/UpdateIssue.module.css'
+import { useParams } from 'react-router';
+import withFetchIssue from '../Helpers/FetchIssue';
+
+import styles from '../Components/UpdateIssue.module.css'
+// '../CSSModules/UpdateIssue.module.css'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { updateJiraIssue } from '../Features/JiraSlice';
+import JiraContext from '../JiraContext';
 
 
 
@@ -13,7 +18,7 @@ let data1;
 const EditIssue = (props) => {
     const [issues, setIssues] = useState([]);
     const [error, setError] = useState(null);
-    const {userData} = useContext(jiraContext)
+    const {userData} = useContext(JiraContext)
     const auth=userData.auth
     const {id} = useParams()
     data1=id
@@ -24,8 +29,8 @@ const EditIssue = (props) => {
     const [result, setResult] = useState(null);
     const [issueKey1,setIssuekey1]=useState('');
     const [loading,setLoading]=useState(true)
-
-    console.log("EditIssue",props.data.projectKey)
+    const dispatch=useDispatch()
+    // console.log("EditIssue",props.data.projectKey)
 
       const{t,i18n} = useTranslation("global")
     
@@ -42,11 +47,12 @@ const EditIssue = (props) => {
         setProjectKey1(props.data.projectKey)
         setSummary1(props.data.summary)
         setLoading(false);
-      } console.log("EditIssue data",props.data.description)
+      } 
+      // console.log("EditIssue data",props.data.description)
      
     },[props.data])
          
-      if (error) return <div>Error: {error}</div>;
+    if (error) return <div>Error: {error}</div>;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -62,23 +68,25 @@ const EditIssue = (props) => {
               ]
             },
             issuetype: { name: issueType1 }
-          }
+          },
+          key: issueKey1
         };
-
-            
+  
               try {
-                const res = await fetch(`/rest/api/3/issue/${data1}`, {
-                  method: 'PUT',
-                  headers: {  'Authorization': `Basic ${auth}`,
-                      'Content-Type': 'application/json' },
-                  body: JSON.stringify(payload)
+                const res = await axios.put(`/rest/api/3/issue/${data1}`, payload,{
+                   //JSON.stringify(payload),
+                  // headers: {  'Authorization': `Basic ${auth}`,
+                  //     'Content-Type': 'application/json' },
+                  // body: JSON.stringify(payload)
                 });
                 console.log(res,"done api call got res");
                 setResult( res);
+                 dispatch(updateJiraIssue(payload))
               } catch (err) {
                 setResult({ error: err.message });
                 
               }
+             
       };
   return (
      <center>
@@ -109,7 +117,7 @@ const EditIssue = (props) => {
       {result && (
         <div style={{color:'#DC3545'}} >
           {result
-            ? `Updated issue   Status :${result.ok} `
+            ? `Updated issue   Status :${result.status} updated `
             : 'not updated'}
         </div>
       )}

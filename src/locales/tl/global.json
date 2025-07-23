@@ -3,22 +3,24 @@
 
 
     "Create Issue":  "సమస్యను సృష్టించు",
-    "Project Key": "ప్రాజెక్ట్ కీ",
+    "Project Key": "ప్రాజెక్ట్  తాళం చెవి",
     "Issue Type": "సమస్య రకం",
     "Summary": "సారాంశం",
     "Description": "వివరణ",
     "Create Task": "పనిని సృష్టించు",
 
-    "Update Issue": "సమస్యను నవీకరించు",
-    "Issue Key": "సమస్య కీ",
-    "Update Task": "టాస్క్‌ను నవీకరించు",
+    "Update Issue": "సమస్యను సవీకరించు",
+    "Issue Key": "సమస్య తాళం చెవి",
+    "Update Task": "సమస్యను సవీకరించు",
 
-    "id":"ఐడి",
-    "key": "తాళం చెవి",
+    "Id":"ఐడి",
+    "Key": "తాళం చెవి",
     "Parent":"తల్లిదండ్రులు",
     "Type":"రకం",
     "Status":"స్థితి",
     "Reporter":"రిపోర్టర్",
     "DeleteIssue":"సమస్యను తొలగించు",
-    "UpdateIssue ":"అప్‌డేట్ ఇష్యూ"
+    "UpdateIssue ":"అప్‌డేట్ ఇష్యూ",
+
+     "Issue Details":"సమస్య వివరాలు"
 }
